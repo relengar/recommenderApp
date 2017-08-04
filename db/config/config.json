@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "recomadmin",
+    "password": "zaq12wsx",
+    "database": "recommenderdb",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "recomadmin",
+    "password": "zaq12wsx",
+    "database": "recommenderdb",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "recomadmin",
+    "password": "zaq12wsx",
+    "database": "recommenderdb",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres"
+  }
+}

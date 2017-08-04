@@ -1,0 +1,49 @@
+<style media="screen">
+  .top-banner {
+    background-image:url("https://t3.ftcdn.net/jpg/00/70/95/94/240_F_70959492_opUAbFWYBA1EZVlr05sEKYvGjEePKa5z.jpg");
+    height:10vw;
+    color:#22282b;
+    text-align:center;
+    padding:1vw;
+    margin-bottom: 1vw;
+  }
+</style>
+
+<div class="control-banner">
+  <div class="login-controls" ng-show="!showLogin">
+    <button ng-click="toggleLoginDialog()" type="button" name="login">Log In</button>
+    <button ng-click="redirect('/404_page')" type="button" name="register">Register</button>
+  </div>
+</div>
+<div class="control-banner" ng-show="showLogin">
+  <label for="usedId">User: </label>
+  <input type="text" name="usedId" value="" ng-model="user.uid">
+  <label for="password">Password: </label>
+  <input type="password" name="password" value="" ng-model="user.passwd">
+  <span><button ng-click="toggleLoginDialog()" type="button" name="button">Cancel</button></span>
+</div>
+<div class="top-banner">
+  <h1>Find the craftsmen you need</h1>
+</div>
+
+<button type="button" name="showAdvSearch" ng-click="showSearchSettins = true;" ng-show="!showSearchSettins">Custom Search</button>
+<div class="" ng-show="showSearchSettins" >
+  <label for="filter">Category </label>
+  <select ng-model="selectedCategory" ng-options="category.name for category in categories"></select>
+  <button class="btn" type="button" name="customSearch">Search</button>
+  <button type="button" name="showAdvSearch" ng-click="showSearchSettins = false;">Hide Custom Search</button>
+</div>
+
+<!-- <div>
+  <h2>Categories overview</h2>
+  <p ng-repeat="category in categories">
+    <strong>{{category.name}}</strong> - {{category.id}}
+  </p>
+</div> -->
+<!-- Temprary section for testing -->
+<div class="">
+  <p ng-repeat="company in companies">
+    <button type="button" name="button" ng-click="redirect('company/' + company.id)">{{company.name}}</button>
+  </p>
+</div>
+<!-- Temprary section for testing -->

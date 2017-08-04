@@ -1,0 +1,28 @@
+<div class="breadcrumb">
+  <a href="#" ng-href="#!/">Home</a> -> <strong>{{company.name}}</strong>
+</div>
+<div class="top-banner">
+  <h1>{{company.name}}</h2>
+</div>
+
+<div class="companyContactInfromation">
+  <p>
+    <label for="">Address</label>
+  </p>
+  <p ng-show="company.information.email">
+    Email:
+    <a href="mailto:{{company.email}}">{{company.email}}</a>
+  </p>
+</div>
+
+<div class="companyDescription">
+  <h3>Description</h3>
+  <p>{{company.description}}</p>
+</div>
+
+<div class="reviews">
+  <h3>Our Reviews</h3>
+  <p>
+    reviews to be added by review provider
+  </p>
+</div>
