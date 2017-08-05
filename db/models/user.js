@@ -7,20 +7,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.Review, {
-          foreignKey: 'reviewId',
-          as: 'review'
-        });
-        User.hasMany(models.Comment, {
-          foreignKey: 'commentId',
-          as: 'userComment'
-        });
-        // associations can be defined here
-      }
-    }
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Review, {
+      foreignKey: 'reviewId',
+      as: 'review'
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: 'commentId',
+      as: 'userComment'
+    });
+  };
+
   return User;
 };

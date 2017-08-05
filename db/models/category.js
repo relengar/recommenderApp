@@ -4,17 +4,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Category.belongsToMany(models.Company, {
-          through: 'queryParameter',
-          foreignKey: 'companyId',
-          as: 'company'
-        });
-        // associations can be defined here
-      }
-    }
   });
+
+  Category.associate = (models) => {
+    Category.belongsToMany(models.Company, {
+      through: 'queryParameter',
+      foreignKey: 'companyId',
+      as: 'company'
+    });
+  };
+
   return Category;
 };

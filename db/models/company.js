@@ -18,29 +18,27 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     rating: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Company.belongsToMany(models.Location, {
-          through: 'queryParameter',
-          foreignKey:'locationId',
-          as: 'location'
-        });
-        Company.belongsToMany(models.Category, {
-          through: 'queryParameter',
-          foreignKey:'categoryId',
-          as: 'category'
-        });
-        Company.hasMany(models.Review, {
-          foreignKey:'companyId',
-          as: 'review'
-        });
-        Company.hasMany(models.Comment, {
-          foreignKey:'companyId',
-          as: 'comment'
-        });
-      }
-    }
   });
+  
+  Company.associate = (models) => {
+    Company.belongsToMany(models.Location, {
+      through: 'queryParameter',
+      foreignKey:'locationId',
+      as: 'location'
+    });
+    Company.belongsToMany(models.Category, {
+      through: 'queryParameter',
+      foreignKey:'categoryId',
+      as: 'category'
+    });
+    Company.hasMany(models.Review, {
+      foreignKey:'companyId',
+      as: 'review'
+    });
+    Company.hasMany(models.Comment, {
+      foreignKey:'companyId',
+      as: 'comment'
+    });
+  };
   return Company;
 };
