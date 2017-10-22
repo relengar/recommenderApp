@@ -1,18 +1,22 @@
-<html ng-app="recommender">
+<html >
   <head>
     <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
-    <style type="text/css" rel="stylesheet" media="screen" src="/front/files/bootstrap.min.css"></style>
-    <style type="text/css" rel="stylesheet" media="screen" src="/front/files/stylish-portfolio.css"></style>
+    <script type="text/javascript" src="/node_modules/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <link rel="stylesheet" href="tempTryTest/assets/css/main.css" />
+
+    <script type="text/javascript" src="/front/app_test.js"></script>
+    <script type="text/javascript" src="/front/controllers/recommenderMain.js"></script>
+    <script type="text/javascript" src="/front/controllers/companyProfileView.js"></script>
+    <script type="text/javascript" src="/front/controllers/companyProfileAdmin.js"></script>
+    <script type="text/javascript" src="/front/controllers/discussionController.js"></script>
+    <script type="text/javascript" src="/front/controllers/loginModule.js"></script>
+    <script type="text/javascript" src="/front/controllers/userProfile.js"></script>
+    <script type="text/javascript" src="/front/services/userService.js"></script>
+    <script type="text/javascript" src="/front/services/companyService.js"></script>
   </head>
-  <body>
-  <div ng-view style="margin:5%;">
-      <script type="text/javascript" src="/front/app.js"></script>
-      <script type="text/javascript" src="/front/controllers/recommenderMain.js"></script>
-      <script type="text/javascript" src="/front/controllers/companyProfileView.js"></script>
-      <script type="text/javascript" src="/front/controllers/userProfileView.js"></script>
-      <script type="text/javascript" src="/front/services/userService.js"></script>
-      <script type="text/javascript" src="/front/services/companyService.js"></script>
-  </div>
-</body>
+  <body ng-app="recommender">
+    <ui-view>
+    </ui-view>
+  </body>
 </html>

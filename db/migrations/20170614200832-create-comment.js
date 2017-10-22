@@ -28,7 +28,7 @@ module.exports = {
         references: {
           model: "Users",
           key: "id",
-          as: "companyId"
+          as: "commentingUser"
         }
       },
       companyId: {
@@ -36,7 +36,7 @@ module.exports = {
         references: {
           model: "Companies",
           key: "id",
-          as: "userId"
+          as: "commentingCompany"
         }
       },
       createdAt: {

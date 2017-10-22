@@ -1,0 +1,38 @@
+<header id="header">
+  <div class="inner">
+    <div class="logo">
+      <a href="#" ng-href="#!/">Home</a>
+    </div>
+    <nav>
+      <div class="">
+        <div class="login-controls" ng-show="!showLogin && !loggedIn">
+          <button ng-click="toggleLoginDialog()" type="button" name="login">Log In</button>
+          <button ng-click="redirect('/user/')" type="button" name="register">Register</button>
+        </div>
+        <div class="login-controls" ng-show="loggedIn">
+          <a href="javascript:"><bold>{{currentUser.name}}</bold></a>
+          <button ng-click="logout()" type="button" name="logout">Log Out</button>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="container ShowHide" ng-show="showLogin && !loggedIn">
+    <form name="login" method="post">
+      <div class="field half first">
+        <label for="usedId">User: </label>
+        <input type="text" name="usedId" value="" ng-model="user.name" placeholder="enter your user name here">
+      </div>
+      <div class="field half">
+        <label for="password">Password: </label>
+        <input type="password" name="password" value="" ng-model="user.password" placeholder="etner your password here">
+      </div>
+      <span ng-show="">{{loginError}}</span>
+      <div class="inner">
+        <button ng-Click="submitLogin()" type="button" name="submitLogin">Submit</button>
+        <button ng-click="toggleLoginDialog()" type="button" name="cancelLogin">Cancel</button>
+      </div>
+    </form>
+  </div>
+</header>
+<ui-view>
+</ui-view>

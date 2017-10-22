@@ -1,6 +1,4 @@
 const myDb = require("./models");
-const company = require("./company.js");
-
-myDb.company = company;
 
 module.exports = myDb;
+//use this insted models/index.js to load some more stuff?

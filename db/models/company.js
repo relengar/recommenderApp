@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     rating: DataTypes.INTEGER
   });
-  
+
   Company.associate = (models) => {
     Company.belongsToMany(models.Location, {
       through: 'queryParameter',
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     });
     Company.hasMany(models.Review, {
       foreignKey:'companyId',
-      as: 'review'
+      as: 'reviews'
     });
     Company.hasMany(models.Comment, {
       foreignKey:'companyId',
-      as: 'comment'
+      as: 'comments'
     });
   };
   return Company;

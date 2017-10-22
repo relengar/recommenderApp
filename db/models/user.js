@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: DataTypes.STRING,
+    password: DataTypes.STRING,
     email: DataTypes.STRING,
     profilePic: DataTypes.BLOB,
     nickName: {
@@ -11,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasMany(models.Review, {
-      foreignKey: 'reviewId',
+      foreignKey: 'userId',
       as: 'review'
     });
     User.hasMany(models.Comment, {
-      foreignKey: 'commentId',
+      foreignKey: 'userId',
       as: 'userComment'
     });
   };

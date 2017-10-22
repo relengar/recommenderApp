@@ -4,30 +4,91 @@ angular.module("recommender")
 
   // test function
   this.getAllCompaniesLikeMoron = (callback) => {
-    //changed syntax due to newer version of angular
-    // $http.get(this._server + "/companies/getAll")
     $http.get(this._server + "/company")
       .then(
-        function (resp) {
+        (resp) => {
           callback(resp.data);
         },
-        function (resp) {
+        (resp) => {
           callback(resp);
         }
       );
   };
 
+  this.createNewCompany = (data, callback) => {
+    $http.post("/company/", data)
+      .then(
+        (resp) => {
+          callback(resp);
+        },
+        (resp) => {
+          callback(resp);
+        }
+      );
+  }
+
   this.getCompanyById = (companyId, callback) => {
     // $http.get(this._server + "/companies/getById", {params:{id:companyId}})
     $http.get(this._server + "/company/" + companyId)
       .then(
-        function(resp) {
+        (resp) => {
           callback(resp.data);
         },
-        function(resp) {
+        (resp) => {
           callback(resp);
         }
       );
+  };
+
+  this.getReviewsbyCompany = (companyId, params, callback) => {
+    let config = {
+      params
+    }
+    $http.get(this._server + "/review/company/"+companyId, config)
+    .then(
+      (resp) => {
+        callback(resp.data);
+      },
+      (resp) => {
+        callback(resp);
+      }
+    );
+  };
+
+  this.getCommentsByReview = (rewiewId, callback) => {
+    $http.get(this._server + "/review/"+rewiewId)
+      .then(
+        (resp) => {
+          callback(resp.data);
+        },
+        (resp) => {
+          callback(resp);
+        }
+      );
+  };
+
+  this.postCommentToReview = (newComment, callback) => {
+    $http.post(this._server + "/comment/" + newComment.reviewId, newComment)
+      .then(
+        (resp) => {
+          callback(resp.data);
+        },
+        (resp) => {
+          callback(resp);
+        }
+      );
+  };
+
+  this.postReviewToCompany = (newReview, callback) => {
+    $http.post(this._server + "/review/" + newReview.companyId, newReview)
+      .then(
+        (resp) => {
+          callback(resp.data);
+        },
+        (err) => {
+          callback(err);
+        }
+      )
   };
 
 });

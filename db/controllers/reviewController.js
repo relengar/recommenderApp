@@ -1,35 +1,52 @@
 const Review = require("../models").Review;
 const Comment = require("../models").Comment;
+const User = require("../models").User;
 
 module.exports = {
   create(req, res) {
-    console.log(req.params.company_id);
-    // console.log("obj start \n\n\n");
-    // console.log(Review.rawAttributes);
-    // console.log("\n\n\nobj end \n\n\n");
-    console.log(Object.keys(Review.rawAttributes));
     return Review
       .create({
         content: req.body.content,
         rating: req.body.rating,
         companyId: req.params.company_id,
-        // reviewedCompany: req.params.company_id,
         userId: req.body.user_id //hold userID in $scope to prevent url hack?
       })
       .then(review => res.status(200).send(review))
       .catch(error => res.status(500).send(error));
   },
   getReviewsbyCompany(req, res) {
+    console.log(req.query);
     return Review
-      .findAll({
+      .findAndCountAll({
+        offset: req.query.offset,
+        limit: req.query.limit,
         where: {
-          // reviewedCompany: req.params.company_id
-          // companyId: req.params.company_id
-        }
-      //   include: [{
-      //     model : Comment,
-      //     as : "comment"
-      //   }]
+          companyId: req.params.company_id
+        },
+        include: [{
+          model: Comment,
+          as: "comments",
+          limit: 3,
+          include: [{
+            model: User,
+            as: "commentingUser"
+          }]
+        }]
+      })
+      .then(reviews => res.status(200).send(reviews))
+      .catch(error => res.status(500).send(error));
+  },
+  getReviewWithComments(req, res) {
+    return Review
+      .findById(req.params.review_id, {
+        include: [{
+          model : Comment,
+          as : "comments",
+          include: [{
+            model: User,
+            as: "commentingUser"
+          }]
+        }]
       })
       .then(review => res.status(200).send(review))
       .catch(error => res.status(500).send(error));

@@ -1,1 +1,55 @@
-<h2>In Construnction</h2>
+<section id="banner">
+  <div class="inner">
+    <h1 ng-show="!user.name || user.name.length === 0">New User</h1>
+    <h1 ng-show="user.name && user.name.length > 0">Profile of {{user.name}}</h1>
+  </div>
+</section>
+
+<section ng-show="$parent.currentUser.uid != paramsId" id="main">
+  <div class="inner">
+    <h3>Personal Details</h3>
+    <p>
+      <label for="name">Name</label>
+      <span>{{user.name}}</span>
+    </p>
+    <p>
+      <label for="email">Email address</label>
+      <span>{{user.email}}</span>
+    </p>
+    <p>
+      <label for="nickName">Nick</label>
+      <span>{{user.nickName}}</span>
+    </p>
+  </div>
+</section>
+
+<section ng-show="($parent.loggedIn && $parent.currentUser.uid == paramsId) || (!$parent.loggedIn && !paramsId)" id="main">
+  <div class="inner">
+    <h3>Personal Details</h3>
+    <form name="userForm" method="post">
+      <p>
+        <label for="name">Name</label>
+        <input type="text" name="name" ng-model="user.name" value="">
+      </p>
+      <p>
+        <label for="email">Email</label>
+        <input type="email" name="email" ng-model="user.email" value="">
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" ng-model="user.password" value="">
+      </p>
+      <p>
+        <label for="passwordCheck">Retype password</label>
+        <input type="password" name="passwordCheck" value="">
+      </p>
+      <p>
+        <label for="nickName">Do we need a nickname?</label>
+        <input type="text" name="nickName" ng-model="user.nickName" value="">
+      </p>
+      <p>
+        <input type="button" name="submitUser" ng-click="submitUser()" ng-disabled="!userForm.$valid" value="Submit">
+      </p>
+    </form>
+  </div>
+</section>

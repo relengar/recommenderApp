@@ -1,4 +1,5 @@
 const Company = require("../models").Company;
+const Review = require("../models").Review;
 
 module.exports = {
   create(req, res) {
@@ -19,14 +20,26 @@ module.exports = {
   },
   getAll(req, res) {
     return Company
-      .findAll()
+      .findAll({
+        // limit: 10,
+        order: [['createdAt', "DESC"]]
+      })
       .then(companies => res.status(200).send(companies))
       .catch(error => res.status(500).send(error));
   },
   getById(req, res) {
     return Company
-      .findById(req.params.company_id)
+      .findById(req.params.company_id, {
+        // include : [{
+        //   model: Review,
+        //   as: "reviews",
+        // }]
+      })
       .then(company => res.status(200).send(company))
       .catch(error => res.status(500).send(error));
+  },
+  test(req, res) {
+    return Company
+      .findById(1);
   }
 };

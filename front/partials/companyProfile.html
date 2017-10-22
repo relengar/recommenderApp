@@ -1,28 +1,70 @@
-<div class="breadcrumb">
-  <a href="#" ng-href="#!/">Home</a> -> <strong>{{company.name}}</strong>
-</div>
-<div class="top-banner">
-  <h1>{{company.name}}</h2>
-</div>
+<section id="banner">
+  <div class="inner wrapper">
+    <div class="top-banner">
+      <h1>{{company.name}}</h1>
+    </div>
+    <div class="companyContactInfromation">
+      <p>
+        <label for="">Address</label>
+        <p>{{company.address}}</p>
+      </p>
+      <p ng-show="company.information.email">
+        Email:
+        <a href="mailto:{{company.email}}">{{company.email}}</a>
+      </p>
+    </div>
 
-<div class="companyContactInfromation">
-  <p>
-    <label for="">Address</label>
-  </p>
-  <p ng-show="company.information.email">
-    Email:
-    <a href="mailto:{{company.email}}">{{company.email}}</a>
-  </p>
-</div>
+    <div class="companyDescription">
+      <h3>Description</h3>
+      <p>{{company.description}}</p>
+    </div>
+  </div>
+</section>
 
-<div class="companyDescription">
-  <h3>Description</h3>
-  <p>{{company.description}}</p>
-</div>
-
-<div class="reviews">
-  <h3>Our Reviews</h3>
-  <p>
-    reviews to be added by review provider
-  </p>
-</div>
+<section id="three">
+  <div class="inner">
+    <div ng-show="$parent.loggedIn" class="row">
+      <form name="reviewForm" method="post">
+        <p>
+          <label for="reviewContent">Your review:</label>
+          <textarea ng-required="true" ng-minlength="1" ng-model="newReview.content" name="reviewContent" rows="8" cols="60"></textarea>
+        </p>
+        <p>
+          <label for="reviewRating">Your rating:</label>
+          <input ng-model="newReview.rating" type="number" name="reviewRating" value="">
+        </p>
+        <button class="alt" ng-click="postReview()" ng-disabled="!reviewForm.$valid" type="button" name="postReview">Submit</button>
+      </form>
+    </div>
+    <div class="reviews">
+      <h3>Our Reviews</h3>
+      <p>
+        <span ><a class="button" ng-show="pagination.offset > 0" ng-click="getPrevPage()" href="javascript:">Prev</a></span> &nbsp; <span><a class="button" ng-show="pagination.offset < (pagination.count - 5)" ng-click="getNextPage()" href="javascript:">Next</a></span>
+      </p>
+      <div class="box" ng-repeat="review in reviews">
+        <p>
+          <div>
+            <strong>{{review.id}}</strong>
+          </div>
+          <div>{{review.content}}</div>
+          <div>
+            Rating: {{review.rating}}
+          </div>
+          <div class="">
+            By {{review.userId}}
+          </div>
+          <br />
+          <input ng-click="viewDiscussion(review.id)" type="button" name="getcomments" value="view discussion">
+        </p>
+        <div  ng-repeat="comment in review.comments" >
+          By <i><a href="mailto:{{comment.commentingUser.email}}">{{comment.commentingUser.name}}</a></i>
+          <br />
+          <p class="box">{{comment.content}}</p>
+        </div>
+      </div>
+      <p>
+        <span ><a class="button" ng-show="pagination.offset > 0" ng-click="getPrevPage()" href="javascript:">Prev</a></span> &nbsp; <span><a class="button" ng-show="pagination.offset < (pagination.count - 5)" ng-click="getNextPage()" href="javascript:">Next</a></span>
+      </p>
+    </div>
+  </div>
+</section>
