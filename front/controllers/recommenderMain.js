@@ -3,13 +3,7 @@ angular.module("recommender")
   templateUrl: "front/partials/main.html",
   controller: ($scope, $location, userService, companyService) => {
     $scope.showSearchSettins = false;
-    // get real categoreis later - figure out the visual for their display
-    $scope.selectedCategory;
-    $scope.categories = [
-      {"name": "Building", "id": 1},
-      {"name": "IT", "id": 2},
-      {"name": "Administration", "id": 3}
-    ];
+    // add categoreis later - figure out the visual for their display
 
 
     $scope.redirect = (page) => {

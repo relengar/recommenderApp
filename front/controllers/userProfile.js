@@ -1,7 +1,7 @@
 angular.module("recommender")
 .component("userProfile", {
   templateUrl: "front/partials/userProfile.html",
-  controller: ($scope, $stateParams, userService) => {
+  controller: ($scope, $stateParams, $state, userService) => {
 
     $scope.user = {
       name:"",
@@ -23,9 +23,12 @@ angular.module("recommender")
 
     $scope.submitUser = () => {
       userService.register($scope.user, (user, err) => {
-        if (user) {
+        if (user && user.name) {
           $scope.user = user;
+          $scope.$parent.setLoggedUser(user);
+          $state.transitionTo("root.main");
         }else {
+          console.log(user.message)
           // show error somehow
         }
       });

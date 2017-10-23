@@ -8,11 +8,6 @@ angular.module("recommender")
       limit: 5,
       count: 0
     };
-
-    $scope.editPage = false;
-    $scope.viewPage = false;
-    $scope.newPage = false;
-
     $scope.company = companyService.getCompanyById($stateParams.id, (company, err) => {
       $scope.company = company;
       companyService.getReviewsbyCompany(company.id, $scope.pagination, (reviews, err) => {

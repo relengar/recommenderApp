@@ -31,6 +31,10 @@ module.exports = {
             model: User,
             as: "commentingUser"
           }]
+        },
+        {
+          model:User,
+          as: "reviewer"
         }]
       })
       .then(reviews => res.status(200).send(reviews))

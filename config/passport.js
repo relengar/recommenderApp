@@ -16,6 +16,7 @@ let validPassword = (passw) => {
 
 passport.use('login', new localStrategy(
   {
+    session: false,
     passReqToCallback: true,
     usernameField: 'name'
   },
@@ -38,6 +39,7 @@ passport.use('login', new localStrategy(
 
 passport.use('register', new localStrategy(
   {
+    session: false,
     passReqToCallback: true,
     usernameField: 'name'
   },
@@ -64,18 +66,3 @@ passport.use('register', new localStrategy(
     .catch((err) => {done(err);});
   }
 ));
-
-
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-
-passport.deserializeUser((id, done) => {
-  User.findById(id)
-  .then((user) => {
-    done(null, user);
-  })
-  .catch((err) => {done(err)});
-});

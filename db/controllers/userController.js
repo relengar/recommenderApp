@@ -31,7 +31,9 @@ module.exports = {
         nickName: req.body.nickName,
         password: req.body.password
       })
-      // .then(users => res.status(200).send(users))
-      // .catch(error => res.status(500).send(error));
+  },
+  getById(id) {
+    return User
+      .findById(id)
   }
 };

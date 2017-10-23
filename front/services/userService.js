@@ -20,7 +20,6 @@ angular.module("recommender")
   };
 
   this.login = (data, callback) => {
-    $cookies.putObject("test", {bwahaha: "test"});
     $http.post("/login", data)
     .then(
       (resp) => {
@@ -46,7 +45,13 @@ angular.module("recommender")
     $http.post("/user", data)
     .then(
       (resp) => {
-        callback(resp);
+        if (resp.data.name) {
+          if (resp.data.name) {
+            $cookies.putObject("currentUser", resp.data);
+            this.currentUser = resp.data;
+          }
+        }
+        callback(resp.data);
       },
       (err) => {
         callback(err);

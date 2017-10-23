@@ -31,9 +31,9 @@
         </p>
         <p>
           <label for="reviewRating">Your rating:</label>
-          <input ng-model="newReview.rating" type="number" name="reviewRating" value="">
+          <input ng-required="true" min="0" max="10" ng-min="0" ng-max="10" ng-model="newReview.rating" type="number" name="reviewRating" value="">
         </p>
-        <button class="alt" ng-click="postReview()" ng-disabled="!reviewForm.$valid" type="button" name="postReview">Submit</button>
+        <button ng-click="postReview()" ng-disabled="!reviewForm.$valid" type="button" name="postReview">Submit</button>
       </form>
     </div>
     <div class="reviews">
@@ -51,13 +51,13 @@
             Rating: {{review.rating}}
           </div>
           <div class="">
-            By {{review.userId}}
+            By <i><a href="#!/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a></i>
           </div>
           <br />
           <input ng-click="viewDiscussion(review.id)" type="button" name="getcomments" value="view discussion">
         </p>
         <div  ng-repeat="comment in review.comments" >
-          By <i><a href="mailto:{{comment.commentingUser.email}}">{{comment.commentingUser.name}}</a></i>
+          By <i><a href="#!/user/{{comment.commentingUser.id}}">{{comment.commentingUser.name}}</a></i>
           <br />
           <p class="box">{{comment.content}}</p>
         </div>

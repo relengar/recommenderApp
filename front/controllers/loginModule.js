@@ -2,7 +2,6 @@ angular.module("recommender")
 .component("loginModule", {
   templateUrl: "front/partials/loginModule.html",
   controller: ($scope, $location, $cookies, userService) => {
-    $scope.controllerTest = "test";
     $scope.showLogin = false;
     $scope.loginError = null;
     $scope.user = {name: "", password: ""};
@@ -31,10 +30,16 @@ angular.module("recommender")
         else {
           $scope.toggleLoginDialog();
           $scope.user = {name: "", password: ""};
-          $scope.loggedIn = true;
-          $scope.currentUser = resp;
+          $scope.setLoggedUser(resp);
+          // $scope.loggedIn = true;
+          // $scope.currentUser = resp;
         }
       });
+    };
+
+    $scope.setLoggedUser = (user) => {
+      $scope.loggedIn = true;
+      $scope.currentUser = user;
     };
 
     $scope.redirect = (page) => {

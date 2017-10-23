@@ -41,17 +41,9 @@
 
 <section id="three" class="wrapper align-center">
   <div class="inner">
-    <div>
-      <h2>Categories overview</h2>
-      <p ng-repeat="category in categories">
-        <strong>{{category.name}}</strong> - {{category.id}}
-      </p>
-    </div>
-    <!-- Temprary section for testing -->
     <div class="">
       <p ng-repeat="company in companies">
         <button type="button" name="button" ng-click="redirect('company/' + company.id)">{{company.name}}</button>
-        <!-- <a href="/#!/company/{{company.id}}">{{company.name}}</a> -->
       </p>
     </div>
   </div>
