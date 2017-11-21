@@ -1,4 +1,4 @@
-var recommender = angular.module('recommender', ["ngCookies", "ui.router" ]);
+var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload']);
 
 recommender.config(function($stateProvider) {
   let states = [
@@ -30,6 +30,11 @@ recommender.config(function($stateProvider) {
       name:"root.userProfile",
       url:"/user/{userId}",
       component:"userProfile"
+    },
+    {
+      name: "root.404Page",
+      url:"*path",
+      component:"pageNotFound"
     }
   ];
 

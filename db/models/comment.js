@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  var Comment = sequelize.define('Comment', {
+  const Comment = sequelize.define('Comment', {
     content: {
       type: DataTypes.STRING,
       allowNull: false
@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'commentingUser'
-    });
-    Comment.belongsTo(models.Company, {
-      foreignKey: 'companyId',
-      as: 'commentingCompany',
     });
   };
 

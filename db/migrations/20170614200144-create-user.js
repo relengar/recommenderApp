@@ -11,6 +11,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      firstName: {
+        type: Sequelize.STRING
+      },
+      lastName: {
+        type: Sequelize.STRING
+      },
       password: {
         allowNull: false,
         type:Sequelize.STRING
@@ -20,9 +26,6 @@ module.exports = {
       },
       profilePic: {
         type: Sequelize.BLOB
-      },
-      nickName: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +38,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users');
+    // return queryInterface.dropTable('Users');
   }
 };

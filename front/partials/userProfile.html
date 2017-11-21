@@ -5,20 +5,24 @@
   </div>
 </section>
 
-<section ng-show="$parent.currentUser.uid != paramsId" id="main">
+<section ng-show="paramsId && $parent.currentUser.uid != paramsId" id="main">
   <div class="inner">
     <h3>Personal Details</h3>
     <p>
-      <label for="name">Name</label>
+      <label for="name">Nick name</label>
       <span>{{user.name}}</span>
+    </p>
+    <p>
+      <label for="name">First name</label>
+      <span>{{user.firstName}}</span>
+    </p>
+    <p>
+      <label for="name">Last name</label>
+      <span>{{user.lastName}}</span>
     </p>
     <p>
       <label for="email">Email address</label>
       <span>{{user.email}}</span>
-    </p>
-    <p>
-      <label for="nickName">Nick</label>
-      <span>{{user.nickName}}</span>
     </p>
   </div>
 </section>
@@ -28,29 +32,43 @@
     <h3>Personal Details</h3>
     <form name="userForm" method="post">
       <p>
-        <label for="name">Name</label>
+        <label for="name">Nick name</label>
         <input type="text" name="name" ng-model="user.name" value="">
+      </p>
+      <p>
+        <label for="name">First name</label>
+        <input type="text" name="firstName" ng-model="user.firstName" value="">
+      </p>
+      <p>
+        <label for="name">Last name</label>
+        <input type="text" name="lastName" ng-model="user.lastName" value="">
       </p>
       <p>
         <label for="email">Email</label>
         <input type="email" name="email" ng-model="user.email" value="">
       </p>
-      <p>
+      <p ng-show="!paramsId">
         <label for="password">Password</label>
         <input type="password" name="password" ng-model="user.password" value="">
       </p>
-      <p>
+      <p ng-show="!paramsId">
         <label for="passwordCheck">Retype password</label>
-        <input type="password" name="passwordCheck" value="">
+        <input type="password" name="passwordCheck" ng-model="passwordCheck" value="">
       </p>
-      <p>
-        <label for="nickName">Do we need a nickname?</label>
-        <input type="text" name="nickName" ng-model="user.nickName" value="">
+      <p ng-show="!paramsId">
+        <!-- <label for="profilePic">Profile picture</label>
+        <input type="file" name="profilePic" ng-model="user.profilePic" value=""> -->
+        <div class="button small" ngf-select ng-model="user.profilePic" name="profilePic" ngf-pattern="'image/*'"
+        ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+        ngf-resize="{width: 150, height: 150}">Select profile picture</div>
+        <p><img style="max-width:20%;" ngf-thumbnail="user.profilePic || '/front/files/stylish-portfolio/img/bg.jpg'"></p>
       </p>
-      <p>
+      <p ng-show="!paramsId">
         <input type="button" name="submitUser" ng-click="submitUser()" ng-disabled="!userForm.$valid" value="Submit">
+      </p>
+      <p ng-show="paramsId">
+        <input type="button" name="updateUser" ng-click="submitUser()" ng-disabled="!userForm.$valid" value="Submit">
       </p>
     </form>
   </div>
 </section>
-{{$parent.currentUser}}

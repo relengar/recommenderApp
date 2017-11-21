@@ -1,5 +1,5 @@
 angular.module("recommender")
-.service("userService", function($http, $cookies) {
+.service("userService", function($http, $cookies, Upload) {
   this.server = "";
   this.currentUser = {name:"dude"};
 
@@ -42,20 +42,41 @@ angular.module("recommender")
   };
 
   this.register = (data, callback) => {
-    $http.post("/user", data)
+    // $http.post("/user", data)
+    // .then(
+    //   (resp) => {
+    //     if (resp.data.name) {
+    //       if (resp.data.name) {
+    //         $cookies.putObject("currentUser", resp.data);
+    //         this.currentUser = resp.data;
+    //       }
+    //     }
+    //     callback(resp.data);
+    //   },
+    //   (err) => {
+    //     callback(err);
+    //   }
+    // );
+    Upload.upload({
+      url: "/user",
+      data: data
+    })
     .then(
       (resp) => {
-        if (resp.data.name) {
           if (resp.data.name) {
-            $cookies.putObject("currentUser", resp.data);
-            this.currentUser = resp.data;
+            if (resp.data.name) {
+              $cookies.putObject("currentUser", resp.data);
+              this.currentUser = resp.data;
+            }
           }
+          callback(resp.data);
+        },
+        (err) => {
+          callback(err);
+        },
+        (evt) => {
+          console.log(evt);
         }
-        callback(resp.data);
-      },
-      (err) => {
-        callback(err);
-      }
     );
   };
 

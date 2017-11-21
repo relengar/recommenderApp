@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Category.associate = (models) => {
     Category.belongsToMany(models.Company, {
-      through: 'queryParameter',
+      through: models.queryParameter,
       foreignKey: 'companyId',
       as: 'company'
     });

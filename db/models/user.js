@@ -1,13 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    name: DataTypes.STRING,
-    password: DataTypes.STRING,
-    email: DataTypes.STRING,
-    profilePic: DataTypes.BLOB,
-    nickName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    profilePic: DataTypes.BLOB
   });
 
   User.associate = (models) => {
@@ -18,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Comment, {
       foreignKey: 'userId',
       as: 'userComment'
+    });
+    User.hasMany(models.Company, {
+      foreignKey: 'ownerId',
+      as:'myCompany'
     });
   };
 

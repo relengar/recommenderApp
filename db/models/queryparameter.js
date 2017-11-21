@@ -1,12 +1,13 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var queryParameter = sequelize.define('queryParameter', {
-    category: DataTypes.STRING,
-    location: DataTypes.STRING
+  const queryParameter = sequelize.define('queryParameter', {
+    category: DataTypes.INTEGER,
+    location: DataTypes.INTEGER,
+    companyId: DataTypes.INTEGER
   });
 
   // queryParameter.associate = (models) => {
-  //   
+  //
   // };
 
   return queryParameter;

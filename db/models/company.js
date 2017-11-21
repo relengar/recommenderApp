@@ -17,27 +17,28 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    rating: DataTypes.INTEGER
+    rating: DataTypes.INTEGER,
+    ratingHistory: DataTypes.JSON // rating obj example: [{value: 3, weigth, 3.3}, {value: 8, weigth: 0.3}]
   });
 
   Company.associate = (models) => {
     Company.belongsToMany(models.Location, {
-      through: 'queryParameter',
-      foreignKey:'locationId',
+      through: models.queryParameter,
+      foreignKey:'location',
       as: 'location'
     });
     Company.belongsToMany(models.Category, {
-      through: 'queryParameter',
-      foreignKey:'categoryId',
+      through: models.queryParameter,
+      foreignKey:'category',
       as: 'category'
+    });
+    Company.belongsTo(models.User, {
+      foreignKey: 'ownerId',
+      as: 'owner'
     });
     Company.hasMany(models.Review, {
       foreignKey:'companyId',
       as: 'reviews'
-    });
-    Company.hasMany(models.Comment, {
-      foreignKey:'companyId',
-      as: 'comments'
     });
   };
   return Company;

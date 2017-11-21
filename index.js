@@ -1,13 +1,16 @@
 const express = require("express");
     db = require('./db/models/'); // functions providing data from database, changed from ./db/, since only db is required
     bodyParser = require('body-parser');
-    cookieParser = require('cookie-parser');
-    session = require('express-session');
+    // cookieParser = require('cookie-parser');
+    // session = require('express-session');
     passport = require('passport');
+    fileUpload = require('express-fileupload');
+    fs = require("fs");
 
 const _port = 8080;
 
 const app = express();
+app.use(fileUpload());
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

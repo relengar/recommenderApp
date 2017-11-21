@@ -9,10 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       category: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       location: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      companyId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

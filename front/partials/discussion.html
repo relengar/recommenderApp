@@ -1,12 +1,3 @@
-<!-- <header id="header">
-  <section>
-    <div class="inner">
-      <div class="logo">
-        <a href="#" ng-href="#!/">Home</a> -> <a href="#!/company/{{review.companyId}}">Company overview</a> -> <strong>discussion</strong>
-      </div>
-    </div>
-  </section>
-</header> -->
 
 <section id="banner">
   <div ng-show="review" class="inner wrapper">
@@ -39,14 +30,6 @@
     </form>
   </div>
 </section>
-<!-- <div ng-show="review">
-  <div ng-show="user && user.type === 'user'">
-    <form name="commentForm" method="post">
-      <p><textarea ng-required="true" ng-minlength="1" ng-model="newComment.content" name="commentContent" rows="8" cols="60"></textarea></p>
-      <button ng-click="postComment()" ng-disabled="!commentForm.$valid" type="button" name="postComment">Comment</button>
-    </form>
-  </div>
-</div> -->
 <div ng-show="!review">
   Loading Review ...
 </div>

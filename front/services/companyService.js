@@ -9,10 +9,34 @@ angular.module("recommender")
         (resp) => {
           callback(resp.data);
         },
-        (resp) => {
-          callback(resp);
+        (err) => {
+          callback(err);
         }
       );
+  };
+
+  this.getCategories = (callback) => {
+    $http.get(this._server + "/category")
+    .then(
+      (resp) => {
+        callback(resp.data);
+      },
+      (err) => {
+        callback(err);
+      }
+    )
+  };
+
+  this.getCompaniesbyCategory = (catId, callback) => {
+    $http.get(this._server + "/category/" + catId)
+    .then(
+      (resp) => {
+        callback(resp.data);
+      },
+      (err) => {
+        callback(err);
+      }
+    )
   };
 
   this.createNewCompany = (data, callback) => {

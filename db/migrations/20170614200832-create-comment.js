@@ -31,14 +31,6 @@ module.exports = {
           as: "commentingUser"
         }
       },
-      companyId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Companies",
-          key: "id",
-          as: "commentingCompany"
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

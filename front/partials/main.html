@@ -22,7 +22,7 @@
 
 <section id="main" class="wrapper">
   <div class="inner">
-    <button ng-click="redirect('/register/company')" type="button" name="newCompany">Register a new company</button>
+    <button ng-show="$parent.loggedIn" ng-click="redirect('/register/company')" type="button" name="newCompany">Register a new company</button>
     <button type="button" name="showAdvSearch" ng-click="showSearchSettins = true;" ng-show="!showSearchSettins">Custom Search</button>
     <div class="" ng-show="showSearchSettins" >
       <form name="customSearch" method="get">
@@ -42,10 +42,17 @@
 <section id="three" class="wrapper align-center">
   <div class="inner">
     <div class="">
-      <p ng-repeat="company in companies">
-        <button type="button" name="button" ng-click="redirect('company/' + company.id)">{{company.name}}</button>
+      <h2>Categories</h2>
+      <p ng-repeat="category in categories">
+        <button type="button" name="button" ng-click="getCompanies(category.id)">{{category.name}}</button>
       </p>
     </div>
+  </div>
+  <div ng-show="companies && companies.length > 0" class="inner">
+    <h2>Companies</h2>
+    <p ng-repeat="company in companies">
+      <button type="button" name="button" ng-click="redirect('company/' + company.id)">{{company.name}}</button>
+    </p>
   </div>
 </section>
 <!-- Temporary section for testing -->

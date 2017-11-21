@@ -49,12 +49,14 @@ angular.module("recommender")
       companyId: $stateParams.id
     }
     $scope.postReview = () => {
+      $scope.newReview.user_id = $scope.$parent.currentUser.uid;
       companyService.postReviewToCompany($scope.newReview, (review, err) => {
         if (review) {
+          review.reviewer = $scope.$parent.currentUser;
           $scope.reviews.push(review);
         }
         $scope.newReview.content = "";
-        $scope.rating = null;
+        $scope.newReview.rating = null;
       });
     };
   }
