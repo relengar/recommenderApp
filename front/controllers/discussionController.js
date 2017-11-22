@@ -21,13 +21,10 @@ angular.module("recommender")
 
     $scope.postComment = () => {
       companyService.postCommentToReview($scope.newComment, (comment, err) => {
-        $scope.newComment = {
-          content: "",
-          // commentType: $scope.$parent.user.type
-          commentType: "user",
-          commenterId: $scope.$parent.currentUser.uid
-        };
-        companyService.getCommentsByReview($stateParams.id, (review, err) => {
+        $scope.newComment.content = "";
+        $scope.newComment.commentType = "user";
+        $scope.newComment.commenterId = $scope.$parent.currentUser.uid;
+        companyService.getCommentsByReview($stateParams.id, $scope.pagination, (review, err) => {
           $scope.review = review;
           $scope.newComment.reviewId = review.id;
         });

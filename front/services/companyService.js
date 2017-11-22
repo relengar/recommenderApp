@@ -79,7 +79,7 @@ angular.module("recommender")
     );
   };
 
-  this.getCommentsByReview = (rewiewId, callback) => {
+  this.getCommentsByReview = (rewiewId, pagination, callback) => {
     $http.get(this._server + "/review/"+rewiewId)
       .then(
         (resp) => {

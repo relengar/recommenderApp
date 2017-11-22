@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "recomadmin",
-    "password": "zaq12wsx",
+    "password": "12345",
     "database": "recommenderdb",
     "host": "127.0.0.1",
     "port": "5432",
@@ -9,7 +9,7 @@
   },
   "test": {
     "username": "recomadmin",
-    "password": "zaq12wsx",
+    "password": "12345",
     "database": "recommenderdb",
     "host": "127.0.0.1",
     "port": "5432",
@@ -17,7 +17,7 @@
   },
   "production": {
     "username": "recomadmin",
-    "password": "zaq12wsx",
+    "password": "12345",
     "database": "recommenderdb",
     "host": "127.0.0.1",
     "port": "5432",
