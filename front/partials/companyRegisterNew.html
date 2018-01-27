@@ -55,7 +55,7 @@
         <div class="button small" ngf-select ng-model="data.gallery" name="gallery" ngf-pattern="'image/*'"
         ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100"
         ngf-resize="{width: 150, height: 150}" ngf-multiple="true" ngf-max-files="20">Select pictures to upload</div>
-        <!-- <p><img style="max-width:20%;" ngf-thumbnail="data.gallery || '/front/files/stylish-portfolio/img/bg.jpg'"></p> -->
+        <!-- <p><img style="max-width:20%;" ngf-thumbnail="data.gallery || '/front/files/images/user-icon-placeholder.jpeg'"></p> -->
         <p><img ng-repeat="pic in data.gallery" style="max-width:20%;" ngf-thumbnail="pic"></p>
       </p>
 

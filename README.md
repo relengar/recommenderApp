@@ -1,7 +1,7 @@
 ## Prerequisites
 
-[Node.js](https://nodejs.org/)
-[postgreSQL](https://www.postgresql.org/)
+[Node.js](https://nodejs.org/) \n
+[postgreSQL](https://www.postgresql.org/) \n
 [npm](https://www.npmjs.com/)
 
 ## run
