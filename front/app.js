@@ -1,6 +1,12 @@
-var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload']);
+// var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload']);
+var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload', 'uiGmapgoogle-maps']);
 
-recommender.config(function($stateProvider) {
+recommender.config(function($stateProvider, uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyDSfomPj1I5i7jlGkKb41r39uZJnkIF59o',
+        // v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'geometry' //'weather,geometry,visualization'
+    });
   let states = [
     {
       name:'root',
@@ -15,6 +21,11 @@ recommender.config(function($stateProvider) {
       name:"root.companyProfile",
       url:"/company/{id}",
       component:"companyProfileView",
+    },
+    {
+      name:"root.companyProfileEdit",
+      url:"/edit/company/{id}",
+      component:"companyProfileEdit",
     },
     {
       name:"root.companyRegister",

@@ -11,7 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     motto: DataTypes.STRING,
     ICO: DataTypes.STRING,
     email: DataTypes.STRING,
-    coordinates: DataTypes.FLOAT,
+    coordsMaxLat: DataTypes.FLOAT,
+    coordsMinLat: DataTypes.FLOAT,
+    coordsMaxLon: DataTypes.FLOAT,
+    coordsMinLon: DataTypes.FLOAT,
+    coordsLat: DataTypes.FLOAT,
+    coordsLon: DataTypes.FLOAT,
+    coordsRad: DataTypes.BIGINT,
     homepage: DataTypes.STRING,
     description: {
       type: DataTypes.TEXT,
@@ -22,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Company.associate = (models) => {
-    Company.belongsToMany(models.Location, {
-      through: models.queryParameter,
-      foreignKey:'location',
-      as: 'location'
-    });
+    // Company.belongsToMany(models.Location, {
+    //   through: models.queryParameter,
+    //   foreignKey:'location',
+    //   as: 'location'
+    // });
     Company.belongsToMany(models.Category, {
       through: models.queryParameter,
       foreignKey:'category',
@@ -41,5 +47,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'reviews'
     });
   };
+
   return Company;
 };

@@ -12,6 +12,8 @@ update the `/db/config/config.json` file accordingly
 run following commands:
 ```
 $ npm install
+$ sequelize db:migrate
+$ sequelize db:seed:all
 $ npm start
 ```
 

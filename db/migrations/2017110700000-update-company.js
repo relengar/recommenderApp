@@ -12,6 +12,6 @@ module.exports= {
     });
   },
   down: (queryInterface, Sequelize) => {
-    // return queryInterface.
+    // return queryInterface
   }
 };

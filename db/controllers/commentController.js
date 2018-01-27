@@ -2,7 +2,6 @@ const Comment = require("../models").Comment;
 
 module.exports = {
   create(req, res) {
-    console.log(req.body);
     return Comment
       .create({
         content: req.body.content,

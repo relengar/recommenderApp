@@ -10,6 +10,7 @@
           <button ng-click="redirect('/user/')" type="button" name="register">Register</button>
         </div>
         <div class="login-controls" ng-show="loggedIn">
+          <img ng-src="{{currentUserPic}}" onerror="this.src='/front/files/stylish-portfolio/img/bg.jpg'" style="max-width:5%;">
           <a href="#!/user/{{currentUser.uid}}"><bold>{{currentUser.name}}</bold></a>
           <button ng-click="logout()" type="button" name="logout">Log Out</button>
         </div>

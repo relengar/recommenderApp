@@ -18,16 +18,29 @@ module.exports = {
         content: req.body.content,
         rating: req.body.rating,
         companyId: req.params.company_id,
-        userId: req.body.user_id //hold userID in $scope to prevent url hack?
+        userId: req.body.user_id
       })
       .then(review => {
+        let resp = {
+          review: review,
+          company: null
+        }
         return Company
         .findById(req.params.company_id)
-        .then((company, review) => {
+        .then((company) => {
+          let previousRating = parseInt(company.rating);
           company.ratingHistory.push(req.body.rating);
           company.rating = mean(company.ratingHistory);
           company.save({fields: ['rating', 'ratingHistory']})
-          .then((review, company) => res.status(200).send({review:review, company:company}))
+          .then(company => {
+            resp.company = company;
+            res.status(200).send(resp);
+            if (previousRating !== parseInt(company.rating)) {
+              req.wss.clients.forEach((client) => {
+                client.send(parseInt(company.rating));
+              });
+            }
+          })
           .catch(error => res.status(500).send(error));
         })
         .catch(error => res.status(500).send(error));

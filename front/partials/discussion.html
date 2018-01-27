@@ -1,4 +1,3 @@
-
 <section id="banner">
   <div ng-show="review" class="inner wrapper">
     <h3>Rating: {{review.rating}}</h3>
@@ -11,6 +10,7 @@
     <h4>Comments:</h4>
     <div ng-repeat="comment in review.comments">
       By <i><a href="#!/user/{{comment.commentingUser.id}}">{{comment.commentingUser.name}}</a></i>
+      <img ng-src="/user/profilePic/{{comment.commentingUser.id}}" alt="">
       <sup style="float:right;">{{comment.createdAt.split("T")[0]}} - {{comment.createdAt.split("T")[1].split(".")[0]}}</sup>
       <br />
       <p class="box">

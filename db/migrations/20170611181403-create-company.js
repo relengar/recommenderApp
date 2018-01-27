@@ -24,8 +24,26 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      coordinates: {
+      coordsMaxLat: {
         type: Sequelize.FLOAT
+      },
+      coordsMinLat: {
+        type: Sequelize.FLOAT
+      },
+      coordsMaxLon: {
+        type: Sequelize.FLOAT
+      },
+      coordsMinLon: {
+        type: Sequelize.FLOAT
+      },
+      coordsLat: {
+        type: Sequelize.FLOAT
+      },
+      coordsLon: {
+        type: Sequelize.FLOAT
+      },
+      coordsRad: {
+        type: Sequelize.BIGINT
       },
       homepage: {
         type: Sequelize.STRING

@@ -4,23 +4,42 @@
       <h1>{{company.name}}</h1>
     </div>
     <div class="companyContactInfromation">
-      <p>
+      <p ng-show="company.address">
         <label for="">Address</label>
-        <p>{{company.address}}</p>
+        <span>{{company.address}}</span>
       </p>
       <p ng-show="company.email">
-        Email:
-        <a href="mailto:{{company.email}}">{{company.email}}</a>
+        <label for="">Email:</label>
+        <span><a href="mailto:{{company.email}}">{{company.email}}</a></span>
       </p>
     </div>
 
-    <div class="companyDescription">
-      <h3>Description</h3>
-      <p>{{company.description}}</p>
+    <div ng-show="company.description">
+      <label>Description</label>
+      <span>{{company.description}}</span>
+    </div>
+    <div ng-show="company.rating">
+      <label>Rating</label>
+      <span>{{company.rating}}</span>
+    </div>
+    <div>
+      <label for="">Company owner</label>
+      <a href="#!/user/{{company.owner.id}}">{{company.owner.name}}</a>
+    </div>
+
+
+    <p ng-show="gallery.length > 0">
+      <span ng-repeat="picture in gallery">
+        <img ng-src="{{picture}}" style="max-width:15%;">
+      </span>
+    </p>
+    <div class="">
+      <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+        <ui-gmap-circle refresh='map.refresh' center='circle.center' radius='circle.radius' fill='circle.fill' stroke='circle.stroke' draggable='false' editable='false' geodesic='true'></ui-gmap-circle>
+      </ui-gmap-google-map>
     </div>
   </div>
 </section>
-
 <section id="three">
   <div class="inner">
     <div ng-show="$parent.loggedIn" class="row">
@@ -52,6 +71,7 @@
           </div>
           <div class="">
             By <i><a href="#!/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a></i>
+            <img ng-src="/user/profilePic/{{review.reviewer.id ? review.reviewer.id : review.reviewer.uid}}" alt="">
           </div>
           <br />
           <input ng-click="viewDiscussion(review.id)" type="button" name="getcomments" value="view discussion">
