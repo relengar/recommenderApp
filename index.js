@@ -11,7 +11,7 @@ const express = require("express");
     config = require("./config.json")[env]["app"];
 
 const sessionSettings = {
-  secret: config.sessionSecret,//"bwahaha",
+  secret: config.sessionSecret,
   resave: false,
   saveUninitialized: false,
   // cookie: {secure: false},
@@ -29,7 +29,7 @@ app.use(fileUpload({
     fileSize: 5 * 1024 * 1024
   }
 }));
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false

@@ -46,22 +46,6 @@ let queryCompaniesPerCategory = async (req, res, categories) => {
   res.status(200).send(resp);
 };
 
-// let deg2rad = (val) => {
-//   return val * Math.PI/180;
-// };
-//
-// let computeGeoDistance(lat1, lon2, lat2, lon2) => {
-//   const R = 6371e3; //earth radius in m
-//   let dLat = deg2rad(lat2-lat1);
-//   let dLon = deg2rad(lon2-lon1);
-//   let a =
-//     Math.sin(dLat/2) * Math.sin(dLat/2) +
-//     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-//     Math.sin(dLon/2) * Math.sin(dLon/2);
-//   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//   return d = R * c; // Distance in m
-// };
-
 const latDistanceInM = 111.19 * 1000;
 const lonDistanceInM = 74.23 * 1000;
 
@@ -87,8 +71,28 @@ let getBorderLatLon = (lat, lon, radius) => {
 }
 
 module.exports = {
+  getAll(req, res) {
+    return Company
+      .findAndCountAll({
+        order: ['id'],
+        offset: parseInt(req.query.offset),
+        limit: parseInt(req.query.limit),
+      })
+      .then(companies => res.status(200).send(companies))
+      .catch(error => res.status(500).send({message: error}));
+  },
   create(req, res) {
     let borderCoords = getBorderLatLon(parseFloat(req.body.coordsLat), parseFloat(req.body.coordsLon), parseFloat(req.body.coordsRad));
+    let requiredFields = ["name"];
+    let missing = requiredFields.map(field => {
+      if (!req.body[field] || req.body[field] === "") {
+        return field;
+      }
+    });
+    if (missing.length > 0) {
+      res.status(400).send({message: "Missing or blank fields: "+missing.join(", ")});
+      return;
+    }
     return Company
       .create({
         name : req.body.name,
@@ -107,22 +111,23 @@ module.exports = {
         description : req.body.description,
         rating : 0,
         ratingHistory: [],
-        ownerId: req.body.ownerId
+        ownerId: req.user.id
       }, {transaction: req.transcation})
-      .then((company) => {
-        return Category
-        .findById(req.body.category)
-          .then((category) => {
-            company.addCategory(category)
-            .then(resp => {console.log(resp)})
-            .catch(err => {console.log(err)});
-            Pictures.saveGallery(req, res, company)
-            .then(company => {
-              res.status(200).send({comp:company, cat:category});
-            });
-          })
-          .catch((err) => res.status(500).send(err));
-      })
+      .then(company => {res.status(200).send(company)}) // categories not yet implemented to front end
+      // .then((company) => {
+      //   return Category
+      //   .findById(req.body.category)
+      //     .then((category) => {
+      //       company.addCategory(category)
+      //       .then(resp => {console.log(resp)})
+      //       .catch(err => {console.log(err)});
+      //       Pictures.saveGallery(req, res, company)
+      //       .then(company => {
+      //         res.status(200).send({comp:company, cat:category});
+      //       });
+      //     })
+      //     .catch((err) => res.status(500).send(err));
+      // })
       .catch(error => res.status(500).send(error));
   },
   delete(req, res) {

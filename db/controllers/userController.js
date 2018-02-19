@@ -3,17 +3,25 @@ const Pictures = require("./picturesController.js");
 const Op = db.Sequelize.Op;
 
 module.exports = {
+  getAll(req, res) {
+    return User
+      .findAndCountAll({
+        order: ['id'],
+        offset: parseInt(req.query.offset),
+        limit: parseInt(req.query.limit),
+      })
+      .then(users => res.status(200).send(users))
+      .catch(error => res.status(500).send({message: error}));
+  },
   getUser(req, res) {
     return User
       .findById(req.params.user_id, {
         attributes: ['name', 'firstName', 'lastName', 'id', 'email']
       })
       .then(user => {
-        // user.getMyCompany()
-        // .then(resp => {res.status(200).send(resp)})
         res.status(200).send(user)
       })
-      .catch(error => res.status(500).send(error));
+      .catch(error => res.status(500).send({message: error}));
   },
   getByName(req) {
     return User
@@ -59,6 +67,10 @@ module.exports = {
       .catch(error => res.status(500).send(error));
   },
   update(req, res) {
+    if (!req.body.name || req.body.name=="") {
+      res.status(400).send({message: "user name is required"});
+      return;
+    }
     return User
       .update({
         name: req.body.name,

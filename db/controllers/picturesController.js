@@ -14,7 +14,8 @@ let buildUri = (req) => {
       }
       pictureName = reqType == 'user' ? pictureName : req.params.picture_name;
       if (!pictureName) {
-        reject("No picture found");
+        resolve('/images/user-icon-placeholder.jpeg');
+        // reject("No picture found");
       }
       uri = uri.replace('{{reqType}}', reqType).replace('{{objId}}', objId).replace('{{pictureName}}', pictureName);
       resolve(uri);

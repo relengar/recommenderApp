@@ -12,7 +12,7 @@ const handlePassportResp = (err, user, info, req, res, next) => {
     res.status(500).send(err);
   }
   else if (user) {
-    resp.uid = user.id;
+    resp.id = user.id;
     resp.firstName = user.firstName;
     resp.lastName = user.lastName;
     resp.name = user.name;
@@ -84,6 +84,7 @@ module.exports = (app, expressWs) => {
     req.logout();
     res.status(200).send("Logged out");
   });
+  app.get('/user/all', User.getAll);
   app.get("/user/:user_id", User.getUser);
   app.get("/user/profilePic/:user_id", Pictures.getPicture);
   app.get("/query/user", User.getForQuery);
@@ -124,6 +125,7 @@ module.exports = (app, expressWs) => {
     })
     .catch(error => res.status(500).send(error));
   });
+  app.get('/company/all', Company.getAll);
   app.get("/company/query", Company.getByQuery);
   app.get("/company/:company_id", Company.getById);
   app.get("/company/:company_id/picture/:picture_name", Pictures.getPicture);
