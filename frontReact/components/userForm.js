@@ -55,23 +55,23 @@ class UserForm extends React.Component {
           <FormInput type={'password'} id={'retypePassword'} value={this.state.retypePassword} label={'Retype password'} onChange={this.alterInput} />
           </span>
         }
-        <div className="6u 12u$(xsmall)">
+        <div className="form-group">
           <label htmlFor={'file'}>Profile picture</label>
-          <input  id={'file'} type="file" name={'file'} onChange={this.setFile} />
+          <input className="form-control-file" id={'file'} type="file" name={'file'} onChange={this.setFile} />
         </div>
         <ProfilePic docId={user.id} docType={'user'} />
         {
           isNew ?
-          <div>
-            <button type="submit" name="button">Register</button>
+          <div className="modal-footer">
+            <button className="btn btn-primary" type="submit" name="button">Register</button>
           </div>
           :
-          <div>
-            <button type="submit">Update user</button>
-            <button type="button" onClick={this.handleDelete}>Delete user</button>
+          <div className="modal-footer">
+            <button className="btn btn-primary" type="submit">Update user</button>
+            <button className="btn btn-secondary" type="button" onClick={this.handleDelete}>Delete user</button>
           </div>
         }
-        {this.state.error || error ? <span>{this.state.error ? this.state.error : error}</span> : ""}
+        {this.state.error || error ? <span className="alert alert-dismissible alert-danger">{this.state.error ? this.state.error : error}</span> : ""}
       </form>
     );
   }

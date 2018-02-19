@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const FormInput = ({type, value, label, onChange, id}) => {
   return (
-    <div className="6u 12u$(xsmall)">
-      <label htmlFor={label}>{label}</label>
-      <input  id={id} type={type} name={id} value={value} onChange={onChange} />
+    <div className="form-group">
+      <label className="col-form-label" htmlFor={label}>{label}</label>
+      <input className="form-control" id={id} type={type} name={id} value={value} onChange={onChange} />
     </div>
   );
 };

@@ -32,11 +32,12 @@ class UserContainer extends React.Component {
 
   render() {
     const {user, currentUser, isFetching, error, urlId } = this.props;
-    // if no user render register, if user but not mine render view, if user and mine render update
+    let edit = urlId && user && currentUser && user.id === currentUser.id;
+    let view = urlId && user && user.id;
     if (isFetching) {
       return <section id="main"><span>Loading ...</span></section>
     }
-    else if (urlId && user && currentUser && user.id === currentUser.id) {
+    else if (edit) {
       // edit page
       return (
         <UserForm
@@ -48,7 +49,7 @@ class UserContainer extends React.Component {
          />
       );
     }
-    else if (urlId && user && user.id) {
+    else if (view) {
       // view page
       let fields = ["name", "firstName", "lastName", "email"].map(field => {
         return {value: user[field], label: field};

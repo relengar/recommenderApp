@@ -13,8 +13,9 @@ class MainPage extends React.Component {
     this.getCompanies = this.getCompanies.bind(this);
   }
   componentDidMount() {
-    this.props.dispatch(getUserList());
-    this.props.dispatch(getAllCompanies());
+    const { pagination } = this.props;
+    this.props.dispatch(getUserList(pagination.users.offset));
+    this.props.dispatch(getAllCompanies(pagination.companies.offset));
   }
 
   getUsers(evt) {
@@ -34,8 +35,11 @@ class MainPage extends React.Component {
     const { userList, companies, isFetching, isLoggedIn, pagination} = this.props;
     return (
       <section id="main">
-        {!isLoggedIn ? <NavLink to="/app/user">Register</NavLink> : <NavLink to="/app/company">Create new company</NavLink>}
+
         <h1>Find the craftsman you need.</h1>
+        <div>
+          {!isLoggedIn ? <NavLink className="btn btn-outline-primary" to="/app/user">Register</NavLink> : <NavLink className="btn btn-outline-primary" to="/app/company">Create new company</NavLink>}
+        </div>
         <div>
         <h3>Users</h3>
         <PaginatedLinks
@@ -72,8 +76,8 @@ MainPage.propTypes = {
 
 const mapStateToProps = state => {
   let pagination = {
-    users: state.user.pagination,
-    companies: state.company.pagination
+    users: state.user.pagination ? state.user.pagination : {offset: 0},
+    companies: state.company.pagination ? state.company.pagination : {offset: 0}
   };
   let isFetching = {
     users: state.user.isFetching,

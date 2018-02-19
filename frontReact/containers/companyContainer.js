@@ -16,10 +16,13 @@ class CompanyContainer extends React.Component {
   }
 
   componentDidMount() {
-  // componentWillMount() {
     const { dispatch, urlId, company } = this.props;
     let retrieve = urlId && urlId !== company.id;
     retrieve ? dispatch(getCompany(this.props.urlId)) : dispatch(setCompany({}));
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(setCompany({}));
   }
 
   registerCompany(data) {
@@ -34,12 +37,13 @@ class CompanyContainer extends React.Component {
 
   render() {
     const { company, currentUser, isFetching, error, urlId } = this.props;
-    console.log(company, currentUser, urlId);
+    let edit = urlId && currentUser && company.id && currentUser.id === company.owner.id;
+    let view = urlId && company.id;
     if (isFetching) {
       return <section id="main"><span>Loading ...</span></section>
     }
-    else if (urlId && currentUser && company.owner && currentUser.id === company.owner.id) {
-      console.log('edit');
+    // else if (urlId && currentUser && company.id && currentUser.id === company.owner.id) {
+    else if (edit) {
       // edit
       return (
         <CompanyForm
@@ -51,8 +55,7 @@ class CompanyContainer extends React.Component {
         />
       );
     }
-    else if (urlId && company.id && company.owner) {
-      console.log('view');
+    else if (view) {
       // view
       let fields = ["name", "email", "address", "homepage", "description"].map(field => {
         return {value: company[field], label: field};
@@ -67,14 +70,11 @@ class CompanyContainer extends React.Component {
         />
       );
     }
-    else if (!urlId && currentUser && currentUser.id === company.ownerId || urlId && !company.id) {
-      console.log('redirect');
+    else if (!urlId && company.id) {
       // just created/deleted company, redirect to main page
       return <Redirect to={'/'} />
     }
-    else if (!urlId && currentUser) {
-      console.log('create');
-      console.log(!urlId && currentUser)
+    else {
       // create
       return (
         <CompanyForm
@@ -85,11 +85,6 @@ class CompanyContainer extends React.Component {
         />
       );
     }
-    // else {
-    //   console.log('redirect');
-    //     // just created/deleted company, redirect to main page
-    //     return <Redirect to={'/'} />
-    // }
   }
 };
 

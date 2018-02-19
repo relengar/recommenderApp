@@ -6,20 +6,22 @@ const PaginatedLinks = ({urlPrefix, items, pagination, getItems, isFetching}) =>
   let next = pagination && pagination.offset > 0;
   let prev = pagination && pagination.offset < (pagination.count - pagination.limit);
   if (isFetching) {
-    return <div>Loading...</div>
+    return <div className="bs-component col-lg-6">Loading...</div>
   }
   return (
-    <div>
+    <div className="bs-component col-lg-6">
+    <div className="modal-body">
     {items.map(item => {
       return <div key={item.id}><NavLink key={item.id} to={urlPrefix+item.id}>{item.name}</NavLink></div>
     })}
+    </div>
     {
       pagination &&
-        <p>
+        <div className="modal-footer">
           {next && <span><a id='prev' onClick={getItems} href='javascript:'>Prev</a></span>}
           {next && prev && ' '}
           {prev && <span><a id='next' onClick={getItems} href='javascript:'>Next</a></span>}
-        </p>
+        </div>
     }
     </div>
   );

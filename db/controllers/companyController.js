@@ -84,13 +84,9 @@ module.exports = {
   create(req, res) {
     let borderCoords = getBorderLatLon(parseFloat(req.body.coordsLat), parseFloat(req.body.coordsLon), parseFloat(req.body.coordsRad));
     let requiredFields = ["name"];
-    let missing = requiredFields.map(field => {
-      if (!req.body[field] || req.body[field] === "") {
-        return field;
-      }
-    });
-    if (missing.length > 0) {
-      res.status(400).send({message: "Missing or blank fields: "+missing.join(", ")});
+    requiredFields = requiredFields.filter(field => !req.body[field] || req.body[field] === "");
+    if (requiredFields.length > 0) {
+      res.status(400).send({message: "Missing or blank fields: "+requiredFields.join(", ")});
       return;
     }
     return Company

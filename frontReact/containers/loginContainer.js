@@ -44,15 +44,15 @@ class LoginContainer extends React.Component {
     }
     else {
       return (
-      <header id="header">
+      <header className="navbar" id="header">
         <form onSubmit={this.handleLogIn}>
-          <div>
-            <div className="field half first"><input id="username" placeholder="username" type="text" value={this.state.username} onChange={this.alterInput} /></div>
-            <div className="field half"><input id="password" placeholder="password" type="password" value={this.state.password} onChange={this.alterInput} /></div>
+          <div className="form-group">
+            <div className="field half first"><input className="col-form-label col-form-label-sm" id="username" placeholder="username" type="text" value={this.state.username} onChange={this.alterInput} /></div>
+            <div className="field half"><input className="col-form-label col-form-label-sm" id="password" placeholder="password" type="password" value={this.state.password} onChange={this.alterInput} /></div>
           </div>
-          {userError ? <p><span>Error: {userError}</span></p> : ""}
-          <div>
-            <button type="submit" name="button" >Log in</button>
+          {userError ? <p><span className="alert alert-dismissible alert-danger">Error: {userError}</span></p> : ""}
+          <div className="modal-footer">
+            <button className="btn btn-primary" type="submit" name="button" >Log in</button>
           </div>
         </form>
       </header>

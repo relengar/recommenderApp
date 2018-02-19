@@ -17,7 +17,7 @@ class CompanyForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault();
-    if (true) {
+    if (this.state.name) {
 
     }
     this.props.submitCompany(this.state);
@@ -39,16 +39,16 @@ class CompanyForm extends React.Component {
         <FormInput type={'text'} id={'description'} value={this.state.description} label={'Description'} onChange={this.alterInput} />
         {
           isNew ?
-          <div>
-            <button type="submit" name="button">Create</button>
+          <div className="modal-footer">
+            <button className="btn btn-primary" type="submit" name="button">Create</button>
           </div>
           :
-          <div>
-            <button type="submit">Update</button>
-            <button type="button" onClick={this.handleDelete}>Delete</button>
+          <div className="modal-footer">
+            <button className="btn btn-primary" type="submit">Update</button>
+            <button className="btn btn-secondary" type="button" onClick={this.handleDelete}>Delete</button>
           </div>
         }
-        {error && <span>{this.state.error ? this.state.error : error}</span>}
+        {(error || this.state.error) && <span className="alert alert-dismissible alert-danger">{this.state.error ? this.state.error : error}</span>}
       </form>
     );
   }

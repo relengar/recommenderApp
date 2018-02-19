@@ -4469,13 +4469,13 @@ var FormInput = function FormInput(_ref) {
 
   return _react2.default.createElement(
     'div',
-    { className: '6u 12u$(xsmall)' },
+    { className: 'form-group' },
     _react2.default.createElement(
       'label',
-      { htmlFor: label },
+      { className: 'col-form-label', htmlFor: label },
       label
     ),
-    _react2.default.createElement('input', { id: id, type: type, name: id, value: value, onChange: onChange })
+    _react2.default.createElement('input', { className: 'form-control', id: id, type: type, name: id, value: value, onChange: onChange })
   );
 };
 
@@ -26969,22 +26969,22 @@ var LoginContainer = function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'header',
-          { id: 'header' },
+          { className: 'navbar', id: 'header' },
           _react2.default.createElement(
             'form',
             { onSubmit: this.handleLogIn },
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'form-group' },
               _react2.default.createElement(
                 'div',
                 { className: 'field half first' },
-                _react2.default.createElement('input', { id: 'username', placeholder: 'username', type: 'text', value: this.state.username, onChange: this.alterInput })
+                _react2.default.createElement('input', { className: 'col-form-label col-form-label-sm', id: 'username', placeholder: 'username', type: 'text', value: this.state.username, onChange: this.alterInput })
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'field half' },
-                _react2.default.createElement('input', { id: 'password', placeholder: 'password', type: 'password', value: this.state.password, onChange: this.alterInput })
+                _react2.default.createElement('input', { className: 'col-form-label col-form-label-sm', id: 'password', placeholder: 'password', type: 'password', value: this.state.password, onChange: this.alterInput })
               )
             ),
             userError ? _react2.default.createElement(
@@ -26992,17 +26992,17 @@ var LoginContainer = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'span',
-                null,
+                { className: 'alert alert-dismissible alert-danger' },
                 'Error: ',
                 userError
               )
             ) : "",
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'modal-footer' },
               _react2.default.createElement(
                 'button',
-                { type: 'submit', name: 'button' },
+                { className: 'btn btn-primary', type: 'submit', name: 'button' },
                 'Log in'
               )
             )
@@ -28016,8 +28016,9 @@ var UserContainer = function (_React$Component) {
           isFetching = _props2.isFetching,
           error = _props2.error,
           urlId = _props2.urlId;
-      // if no user render register, if user but not mine render view, if user and mine render update
 
+      var edit = urlId && user && currentUser && user.id === currentUser.id;
+      var view = urlId && user && user.id;
       if (isFetching) {
         return _react2.default.createElement(
           'section',
@@ -28028,7 +28029,7 @@ var UserContainer = function (_React$Component) {
             'Loading ...'
           )
         );
-      } else if (urlId && user && currentUser && user.id === currentUser.id) {
+      } else if (edit) {
         // edit page
         return _react2.default.createElement(_userForm2.default, {
           user: user,
@@ -28037,7 +28038,7 @@ var UserContainer = function (_React$Component) {
           error: error,
           isNew: false
         });
-      } else if (urlId && user && user.id) {
+      } else if (view) {
         // view page
         var fields = ["name", "firstName", "lastName", "email"].map(function (field) {
           return { value: user[field], label: field };
@@ -28207,40 +28208,40 @@ var UserForm = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: '6u 12u$(xsmall)' },
+          { className: 'form-group' },
           _react2.default.createElement(
             'label',
             { htmlFor: 'file' },
             'Profile picture'
           ),
-          _react2.default.createElement('input', { id: 'file', type: 'file', name: 'file', onChange: this.setFile })
+          _react2.default.createElement('input', { className: 'form-control-file', id: 'file', type: 'file', name: 'file', onChange: this.setFile })
         ),
         _react2.default.createElement(_profilePic2.default, { docId: user.id, docType: 'user' }),
         isNew ? _react2.default.createElement(
           'div',
-          null,
+          { className: 'modal-footer' },
           _react2.default.createElement(
             'button',
-            { type: 'submit', name: 'button' },
+            { className: 'btn btn-primary', type: 'submit', name: 'button' },
             'Register'
           )
         ) : _react2.default.createElement(
           'div',
-          null,
+          { className: 'modal-footer' },
           _react2.default.createElement(
             'button',
-            { type: 'submit' },
+            { className: 'btn btn-primary', type: 'submit' },
             'Update user'
           ),
           _react2.default.createElement(
             'button',
-            { type: 'button', onClick: this.handleDelete },
+            { className: 'btn btn-secondary', type: 'button', onClick: this.handleDelete },
             'Delete user'
           )
         ),
         this.state.error || error ? _react2.default.createElement(
           'span',
-          null,
+          { className: 'alert alert-dismissible alert-danger' },
           this.state.error ? this.state.error : error
         ) : ""
       );
@@ -28320,7 +28321,6 @@ var CompanyContainer = function (_React$Component) {
   _createClass(CompanyContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // componentWillMount() {
       var _props = this.props,
           dispatch = _props.dispatch,
           urlId = _props.urlId,
@@ -28328,6 +28328,11 @@ var CompanyContainer = function (_React$Component) {
 
       var retrieve = urlId && urlId !== company.id;
       retrieve ? dispatch((0, _company.getCompany)(this.props.urlId)) : dispatch((0, _company.setCompany)({}));
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.props.dispatch((0, _company.setCompany)({}));
     }
   }, {
     key: 'registerCompany',
@@ -28354,7 +28359,8 @@ var CompanyContainer = function (_React$Component) {
           error = _props2.error,
           urlId = _props2.urlId;
 
-      console.log(company, currentUser, urlId);
+      var edit = urlId && currentUser && company.id && currentUser.id === company.owner.id;
+      var view = urlId && company.id;
       if (isFetching) {
         return _react2.default.createElement(
           'section',
@@ -28365,57 +28371,49 @@ var CompanyContainer = function (_React$Component) {
             'Loading ...'
           )
         );
-      } else if (urlId && currentUser && company.owner && currentUser.id === company.owner.id) {
-        console.log('edit');
-        // edit
-        return _react2.default.createElement(_companyForm2.default, {
-          company: company,
-          isNew: false,
-          submitCompany: this.updateCompany,
-          deleteCompany: this.deleteCompany,
-          error: error
-        });
-      } else if (urlId && company.id && company.owner) {
-        console.log('view');
-        // view
-        var fields = ["name", "email", "address", "homepage", "description"].map(function (field) {
-          return { value: company[field], label: field };
-        });
-        return _react2.default.createElement(_viewDataFields2.default, {
-          dataArr: fields,
-          header: company.name,
-          docId: company.id,
-          docType: 'company',
-          children: _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/app/user/' + company.owner.id },
-              company.owner.name
-            )
-          )
-        });
-      } else if (!urlId && currentUser && currentUser.id === company.ownerId || urlId && !company.id) {
-        console.log('redirect');
-        // just created/deleted company, redirect to main page
-        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
-      } else if (!urlId && currentUser) {
-        console.log('create');
-        console.log(!urlId && currentUser);
-        // create
-        return _react2.default.createElement(_companyForm2.default, {
-          company: company,
-          isNew: true,
-          submitCompany: this.registerCompany,
-          error: error
-        });
       }
-      // else {
-      //   console.log('redirect');
-      //     // just created/deleted company, redirect to main page
-      //     return <Redirect to={'/'} />
-      // }
+      // else if (urlId && currentUser && company.id && currentUser.id === company.owner.id) {
+      else if (edit) {
+          // edit
+          return _react2.default.createElement(_companyForm2.default, {
+            company: company,
+            isNew: false,
+            submitCompany: this.updateCompany,
+            deleteCompany: this.deleteCompany,
+            error: error
+          });
+        } else if (view) {
+          // view
+          var fields = ["name", "email", "address", "homepage", "description"].map(function (field) {
+            return { value: company[field], label: field };
+          });
+          return _react2.default.createElement(_viewDataFields2.default, {
+            dataArr: fields,
+            header: company.name,
+            docId: company.id,
+            docType: 'company',
+            children: _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/app/user/' + company.owner.id },
+                company.owner.name
+              )
+            )
+          });
+        } else if (!urlId && company.id) {
+          // just created/deleted company, redirect to main page
+          return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+        } else {
+          // create
+          return _react2.default.createElement(_companyForm2.default, {
+            company: company,
+            isNew: true,
+            submitCompany: this.registerCompany,
+            error: error
+          });
+        }
     }
   }]);
 
@@ -28505,7 +28503,7 @@ var CompanyForm = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(evt) {
       evt.preventDefault();
-      if (true) {}
+      if (this.state.name) {}
       this.props.submitCompany(this.state);
     }
   }, {
@@ -28537,29 +28535,29 @@ var CompanyForm = function (_React$Component) {
         _react2.default.createElement(_formInput2.default, { type: 'text', id: 'description', value: this.state.description, label: 'Description', onChange: this.alterInput }),
         isNew ? _react2.default.createElement(
           'div',
-          null,
+          { className: 'modal-footer' },
           _react2.default.createElement(
             'button',
-            { type: 'submit', name: 'button' },
+            { className: 'btn btn-primary', type: 'submit', name: 'button' },
             'Create'
           )
         ) : _react2.default.createElement(
           'div',
-          null,
+          { className: 'modal-footer' },
           _react2.default.createElement(
             'button',
-            { type: 'submit' },
+            { className: 'btn btn-primary', type: 'submit' },
             'Update'
           ),
           _react2.default.createElement(
             'button',
-            { type: 'button', onClick: this.handleDelete },
+            { className: 'btn btn-secondary', type: 'button', onClick: this.handleDelete },
             'Delete'
           )
         ),
-        error && _react2.default.createElement(
+        (error || this.state.error) && _react2.default.createElement(
           'span',
-          null,
+          { className: 'alert alert-dismissible alert-danger' },
           this.state.error ? this.state.error : error
         )
       );
@@ -28636,8 +28634,10 @@ var MainPage = function (_React$Component) {
   _createClass(MainPage, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.dispatch((0, _user.getUserList)());
-      this.props.dispatch((0, _company.getAllCompanies)());
+      var pagination = this.props.pagination;
+
+      this.props.dispatch((0, _user.getUserList)(pagination.users.offset));
+      this.props.dispatch((0, _company.getAllCompanies)(pagination.companies.offset));
     }
   }, {
     key: 'getUsers',
@@ -28670,19 +28670,23 @@ var MainPage = function (_React$Component) {
       return _react2.default.createElement(
         'section',
         { id: 'main' },
-        !isLoggedIn ? _react2.default.createElement(
-          _reactRouterDom.NavLink,
-          { to: '/app/user' },
-          'Register'
-        ) : _react2.default.createElement(
-          _reactRouterDom.NavLink,
-          { to: '/app/company' },
-          'Create new company'
-        ),
         _react2.default.createElement(
           'h1',
           null,
           'Find the craftsman you need.'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          !isLoggedIn ? _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { className: 'btn btn-outline-primary', to: '/app/user' },
+            'Register'
+          ) : _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { className: 'btn btn-outline-primary', to: '/app/company' },
+            'Create new company'
+          )
         ),
         _react2.default.createElement(
           'div',
@@ -28736,8 +28740,8 @@ MainPage.propTypes = {
 
 var mapStateToProps = function mapStateToProps(state) {
   var pagination = {
-    users: state.user.pagination,
-    companies: state.company.pagination
+    users: state.user.pagination ? state.user.pagination : { offset: 0 },
+    companies: state.company.pagination ? state.company.pagination : { offset: 0 }
   };
   var isFetching = {
     users: state.user.isFetching,
@@ -28789,27 +28793,31 @@ var PaginatedLinks = function PaginatedLinks(_ref) {
   if (isFetching) {
     return _react2.default.createElement(
       'div',
-      null,
+      { className: 'bs-component col-lg-6' },
       'Loading...'
     );
   }
   return _react2.default.createElement(
     'div',
-    null,
-    items.map(function (item) {
-      return _react2.default.createElement(
-        'div',
-        { key: item.id },
-        _react2.default.createElement(
-          _reactRouterDom.NavLink,
-          { key: item.id, to: urlPrefix + item.id },
-          item.name
-        )
-      );
-    }),
+    { className: 'bs-component col-lg-6' },
+    _react2.default.createElement(
+      'div',
+      { className: 'modal-body' },
+      items.map(function (item) {
+        return _react2.default.createElement(
+          'div',
+          { key: item.id },
+          _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { key: item.id, to: urlPrefix + item.id },
+            item.name
+          )
+        );
+      })
+    ),
     pagination && _react2.default.createElement(
-      'p',
-      null,
+      'div',
+      { className: 'modal-footer' },
       next && _react2.default.createElement(
         'span',
         null,
