@@ -2024,7 +2024,7 @@ var createTransitionManager = function createTransitionManager() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.requestFunc = undefined;
+exports.isAllowedImageFormat = exports.requestFunc = undefined;
 
 var _axios = __webpack_require__(132);
 
@@ -2045,6 +2045,20 @@ var requestFunc = exports.requestFunc = function requestFunc(url) {
     method: method,
     data: formData
   });
+};
+
+var isAllowedImageFormat = exports.isAllowedImageFormat = function isAllowedImageFormat(file) {
+  var allowedTypes = ["jpg", "jpeg", "png", "gif", "tif", "bmp"];
+  var result = true;
+  if (file && file.type) {
+    result = false;
+    allowedTypes.forEach(function (type) {
+      if (file.type.indexOf(type) !== -1) {
+        result = true;
+      }
+    });
+  }
+  return result;
 };
 
 /***/ }),
@@ -4270,13 +4284,17 @@ var getUserList = exports.getUserList = function getUserList() {
 var createUser = exports.createUser = function createUser(data) {
   return function (dispatch) {
     dispatch(requestStart());
-    var passw = data.password;
-    (0, _helpers.requestFunc)('/user', 'PUT', data).then(function (resp) {
-      dispatch((0, _access.logIn)(resp.data.name, passw));
-      dispatch(setUser(resp.data));
-    }).catch(function (resp) {
-      dispatch(requestFail(resp.response.data.message, data));
-    });
+    if ((0, _helpers.isAllowedImageFormat)(data.file)) {
+      var passw = data.password;
+      (0, _helpers.requestFunc)('/user', 'PUT', data).then(function (resp) {
+        dispatch((0, _access.logIn)(resp.data.name, passw));
+        dispatch(setUser(resp.data));
+      }).catch(function (resp) {
+        dispatch(requestFail(resp.response.data.message, data));
+      });
+    } else {
+      dispatch(requestFail("Please upload images only", data));
+    }
   };
 };
 
@@ -4294,11 +4312,15 @@ var getUser = exports.getUser = function getUser(id) {
 var updateUser = exports.updateUser = function updateUser(data) {
   return function (dispatch) {
     dispatch(requestStart());
-    (0, _helpers.requestFunc)('/user/update', 'POST', data).then(function (resp) {
-      dispatch(setUser(data));
-    }).catch(function (resp) {
-      dispatch(requestFail(resp.response.data.message, data));
-    });
+    if ((0, _helpers.isAllowedImageFormat)(data.file)) {
+      (0, _helpers.requestFunc)('/user/update', 'POST', data).then(function (resp) {
+        dispatch(setUser(data));
+      }).catch(function (resp) {
+        dispatch(requestFail(resp.response.data.message, data));
+      });
+    } else {
+      dispatch(requestFail("Please upload images only", data));
+    }
   };
 };
 

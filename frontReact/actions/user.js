@@ -1,5 +1,5 @@
 import { logIn, logOut } from './access';
-import { requestFunc } from './helpers';
+import { requestFunc, isAllowedImageFormat } from './helpers';
 
 const requestStart = () => {
   return {
@@ -49,15 +49,20 @@ export const getUserList = (offset = 0, limit = 2) => {
 export const createUser = data => {
   return dispatch => {
     dispatch(requestStart());
-    let passw = data.password;
-    requestFunc('/user', 'PUT', data)
-    .then(resp => {
-      dispatch(logIn(resp.data.name, passw));
-      dispatch(setUser(resp.data));
-    })
-    .catch(resp => {
-      dispatch(requestFail(resp.response.data.message, data));
-    });
+    if (isAllowedImageFormat(data.file)) {
+      let passw = data.password;
+      requestFunc('/user', 'PUT', data)
+      .then(resp => {
+        dispatch(logIn(resp.data.name, passw));
+        dispatch(setUser(resp.data));
+      })
+      .catch(resp => {
+        dispatch(requestFail(resp.response.data.message, data));
+      });
+    }
+    else {
+      dispatch(requestFail("Please upload images only", data));
+    }
   };
 };
 
@@ -77,13 +82,18 @@ export const getUser = id => {
 export const updateUser = data => {
   return dispatch => {
     dispatch(requestStart());
-    requestFunc('/user/update', 'POST', data)
-    .then(resp => {
-      dispatch(setUser(data));
-    })
-    .catch(resp => {
-      dispatch(requestFail(resp.response.data.message, data));
-    });
+    if (isAllowedImageFormat(data.file)) {
+      requestFunc('/user/update', 'POST', data)
+      .then(resp => {
+        dispatch(setUser(data));
+      })
+      .catch(resp => {
+        dispatch(requestFail(resp.response.data.message, data));
+      });
+    }
+    else {
+      dispatch(requestFail("Please upload images only", data));
+    }
   }
 };
 

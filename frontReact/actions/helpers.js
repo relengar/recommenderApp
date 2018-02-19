@@ -11,3 +11,17 @@ export const requestFunc = (url, method = 'GET', data = {}) => {
     data: formData
   });
 };
+
+export const isAllowedImageFormat = (file) => {
+  let allowedTypes = ["jpg", "jpeg", "png", "gif", "tif", "bmp"];
+  let result = true;
+  if (file && file.type) {
+    result = false;
+    allowedTypes.forEach(type => {
+      if (file.type.indexOf(type) !== -1) {
+        result = true;
+      }
+    });
+  }
+  return result
+};
