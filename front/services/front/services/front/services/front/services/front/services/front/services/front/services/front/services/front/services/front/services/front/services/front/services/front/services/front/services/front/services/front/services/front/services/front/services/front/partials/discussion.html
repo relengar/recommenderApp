@@ -1,0 +1,35 @@
+<section id="banner">
+  <div ng-show="review" class="inner wrapper">
+    <h3>Rating: {{review.rating}}</h3>
+    <span>{{review.createdAt.substr(0,10)}}</span>
+    <div>{{review.content}}</div>
+  </div>
+</section>
+<section id="main" ng-show="review.comments.length > 0">
+  <div class="inner wrapper">
+    <h4>Comments:</h4>
+    <div ng-repeat="comment in review.comments">
+      By <i><a href="#!/user/{{comment.commentingUser.id}}">{{comment.commentingUser.name}}</a></i>
+      <img ng-src="/user/profilePic/{{comment.commentingUser.id}}" alt="">
+      <sup style="float:right;">{{comment.createdAt.split("T")[0]}} - {{comment.createdAt.split("T")[1].split(".")[0]}}</sup>
+      <br />
+      <p class="box">
+        {{comment.content}}
+      </p>
+    </div>
+    <!-- <button ng-show="user.id === comment.userId" type="button" name="deleteComment">Detele</button> -->
+  </div>
+</section>
+<section id="footer" ng-show="$parent.loggedIn">
+  <div class="inner">
+    <form name="commentForm" method="post">
+      <p>
+        <label for="commentContent">Your comment:</label>
+        <textarea ng-required="true" ng-minlength="1" ng-model="newComment.content" name="commentContent" rows="8" cols="60"></textarea></p>
+      <button class="alt" ng-click="postComment()" ng-disabled="!commentForm.$valid" type="button" name="postComment">Comment</button>
+    </form>
+  </div>
+</section>
+<div ng-show="!review">
+  Loading Review ...
+</div>

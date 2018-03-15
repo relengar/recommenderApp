@@ -1,9 +1,9 @@
-const company = require('./companyController.js');
-const user = require('./userController.js');
-const review = require('./reviewController.js');
-const comment = require('./commentController.js');
-const category = require('./categoryController.js');
-const pictures = require('./picturesController.js');
+const company = require('./company');
+const user = require('./user');
+const review = require('./review');
+const comment = require('./comment');
+const category = require('./category');
+const pictures = require('./pictures');
 
 module.exports = {
   company,

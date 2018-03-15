@@ -1,0 +1,90 @@
+<section id="banner">
+  <div class="inner wrapper">
+    <div class="top-banner">
+      <h1>{{company.name}}</h1>
+    </div>
+    <div class="companyContactInfromation">
+      <p ng-show="company.address">
+        <label for="">Address</label>
+        <span>{{company.address}}</span>
+      </p>
+      <p ng-show="company.email">
+        <label for="">Email:</label>
+        <span><a href="mailto:{{company.email}}">{{company.email}}</a></span>
+      </p>
+    </div>
+
+    <div ng-show="company.description">
+      <label>Description</label>
+      <span>{{company.description}}</span>
+    </div>
+    <div ng-show="company.rating">
+      <label>Rating</label>
+      <span>{{company.rating}}</span>
+    </div>
+    <div>
+      <label for="">Company owner</label>
+      <a href="#!/user/{{company.owner.id}}">{{company.owner.name}}</a>
+    </div>
+
+
+    <p ng-show="gallery.length > 0">
+      <span ng-repeat="picture in gallery">
+        <img ng-src="{{picture}}" style="max-width:15%;">
+      </span>
+    </p>
+    <div class="">
+      <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+        <ui-gmap-circle refresh='map.refresh' center='circle.center' radius='circle.radius' fill='circle.fill' stroke='circle.stroke' draggable='false' editable='false' geodesic='true'></ui-gmap-circle>
+      </ui-gmap-google-map>
+    </div>
+  </div>
+</section>
+<section id="three">
+  <div class="inner">
+    <div ng-show="$parent.loggedIn" class="row">
+      <form name="reviewForm" method="post">
+        <p>
+          <label for="reviewContent">Your review:</label>
+          <textarea ng-required="true" ng-minlength="1" ng-model="newReview.content" name="reviewContent" rows="8" cols="60"></textarea>
+        </p>
+        <p>
+          <label for="reviewRating">Your rating:</label>
+          <input ng-required="true" min="0" max="10" ng-min="0" ng-max="10" ng-model="newReview.rating" type="number" name="reviewRating" value="">
+        </p>
+        <button ng-click="postReview()" ng-disabled="!reviewForm.$valid" type="button" name="postReview">Submit</button>
+      </form>
+    </div>
+    <div class="reviews">
+      <h3>Our Reviews</h3>
+      <p>
+        <span ><a class="button" ng-show="pagination.offset > 0" ng-click="getPrevPage()" href="javascript:">Prev</a></span> &nbsp; <span><a class="button" ng-show="pagination.offset < (pagination.count - 5)" ng-click="getNextPage()" href="javascript:">Next</a></span>
+      </p>
+      <div class="box" ng-repeat="review in reviews">
+        <p>
+          <div>
+            <strong>{{review.id}}</strong>
+          </div>
+          <div>{{review.content}}</div>
+          <div>
+            Rating: {{review.rating}}
+          </div>
+          <div class="">
+            By <i><a href="#!/user/{{review.reviewer.id}}">{{review.reviewer.name}}</a></i>
+            <img ng-src="/user/profilePic/{{review.reviewer.id ? review.reviewer.id : review.reviewer.uid}}" alt="">
+          </div>
+          <br />
+          <input ng-click="viewDiscussion(review.id)" type="button" name="getcomments" value="view discussion">
+        </p>
+        <div  ng-repeat="comment in review.comments" >
+          By <i><a href="#!/user/{{comment.commentingUser.id}}">{{comment.commentingUser.name}}</a></i>
+          <br />
+          <p class="box">{{comment.content}}</p>
+        </div>
+      </div>
+      <p>
+        <span ><a class="button" ng-show="pagination.offset > 0" ng-click="getPrevPage()" href="javascript:">Prev</a></span> &nbsp; <span><a class="button" ng-show="pagination.offset < (pagination.count - 5)" ng-click="getNextPage()" href="javascript:">Next</a></span>
+      </p>
+    </div>
+  </div>
+</section>

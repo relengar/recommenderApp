@@ -1,0 +1,87 @@
+<section id="banner">
+  <div class="inner">
+    <h1 ng-show="!user.name || user.name.length === 0">New User</h1>
+    <h1 ng-show="user.name && user.name.length > 0">Profile of {{user.name}}</h1>
+  </div>
+</section>
+<section ng-show="paramsId && $parent.currentUser.uid != paramsId" id="main">
+  <div class="inner">
+    <h3>Personal Details</h3>
+    <p>
+      <label for="name">Nick name</label>
+      <span>{{user.name}}</span>
+    </p>
+    <p>
+      <label for="name">First name</label>
+      <span>{{user.firstName}}</span>
+    </p>
+    <p>
+      <label for="name">Last name</label>
+      <span>{{user.lastName}}</span>
+    </p>
+    <p>
+      <label for="email">Email address</label>
+      <span>{{user.email}}</span>
+    </p>
+  </div>
+  <div class="inner" ng-show="companies && companies.length > 0">
+    <h2>Companies owned by {{user.name}}</h2>
+    <p ng-repeat="company in companies">
+      <button type="button" name="button" ng-click="redirect('company/' + company.id)">{{company.name}}</button>
+    </p>
+  </div>
+</section>
+
+<section ng-show="($parent.loggedIn && $parent.currentUser.uid == paramsId) || (!$parent.loggedIn && !paramsId)" id="main">
+  <div class="inner">
+    <h3>Personal Details</h3>
+    <form name="userForm" method="post">
+      <div class="row uniform">
+        <div class="6u 12u$(xsmall)">
+          <label for="name">Nick name</label>
+          <input type="text" name="name" ng-model="user.name" value="">
+        </div>
+        <div class="6u 12u$(xsmall)">
+          <label for="name">First name</label>
+          <input type="text" name="firstName" ng-model="user.firstName" value="">
+        </div>
+        <div class="6u 12u$(xsmall)">
+          <label for="name">Last name</label>
+          <input type="text" name="lastName" ng-model="user.lastName" value="">
+        </div>
+        <div class="6u 12u$(xsmall)">
+          <label for="email">Email</label>
+          <input type="email" name="email" ng-model="user.email" value="">
+        </div>
+        <div class="6u 12u$(xsmall)" ng-show="!paramsId">
+          <label for="password">Password</label>
+          <input type="password" name="password" ng-model="user.password" value="">
+        </div>
+        <div class="6u 12u$(xsmall)" ng-show="!paramsId">
+          <label for="passwordCheck">Retype password</label>
+          <input type="password" name="passwordCheck" ng-model="passwordCheck" value="">
+        </div>
+      </div>
+      <p ng-show="!paramsId">
+        <div class="button small" ngf-select ng-model="user.profilePic" name="profilePic" ngf-pattern="'image/*'"
+        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100"
+        ngf-resize="{width: 150, height: 150}">Select profile picture</div>
+        <p><img style="max-width:20%;" ngf-thumbnail="user.profilePic || '/front/files/images/user-icon-placeholder.jpeg'"></p>
+      </p>
+      <p ng-show="!paramsId">
+        <input type="button" name="submitUser" ng-click="submitUser()" ng-disabled="!userForm.$valid" value="Submit">
+      </p>
+      <ul ng-show="paramsId">
+        <input type="button" name="updateUser" ng-click="updateUser()" ng-disabled="!userForm.$valid" value="Update user">
+        <input type="button" name="deleteUser" ng-click="deleteUser()" value="Delete user">
+        <input type="button" name="deletePic" ng-click="deleteProfilePic()" ng-disabled="$parent.currentUserPic === '/front/files/images/user-icon-placeholder.jpeg'" value="Delete profile picture">
+      </ul>
+    </form>
+  </div>
+  <div class="inner" ng-show="companies && companies.length > 0">
+    <h2>Your companies</h2>
+    <p ng-repeat="company in companies">
+      <button type="button" name="button" ng-click="redirect('edit/company/' + company.id)">{{company.name}}</button>
+    </p>
+  </div>
+</section>

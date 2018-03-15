@@ -28,6 +28,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon --exec node --inspect index.js"
   }
 }

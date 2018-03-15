@@ -11,7 +11,7 @@ const express = require("express");
     config = require("./config.json")[env]["app"];
 
 const sessionSettings = {
-  secret: config.sessionSecret,//"bwahaha",
+  secret: config.sessionSecret,
   resave: false,
   saveUninitialized: false,
   // cookie: {secure: false},
