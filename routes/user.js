@@ -33,19 +33,6 @@ const handlePassportResp = (err, user, info, req, res, next) => {
 };
 
 module.exports = app => {
-  // let ratingWss = expressWs.getWss('/rating');
-  app.ws('/rating', (ws, req) => {
-    // ws.on('message', msg => {
-    //   ratingWss.clients.forEach(client => {
-    //     client.send(msg.data);
-    //   })
-    // });
-
-    ws.on('close', evt => {
-      console.log(evt);
-    })
-  });
-
   //User, with authentication
   app.put("/user", (req, res, next) => {
     // call passport with strategy to register new user

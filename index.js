@@ -8,18 +8,18 @@ const express = require("express");
     fileUpload = require('express-fileupload');
     fs = require("fs");
     env = process.env.NODE_ENV || 'development';
-    config = require("./config.json")[env]["app"];
+    config = require("./config.json")[env];
 
 const sessionSettings = {
-  secret: config.sessionSecret,
+  secret: config.app.sessionSecret,
   resave: false,
   saveUninitialized: false,
   // cookie: {secure: false},
 };
-if (env !== 'development' && config.mongoUrlForSession && config.mongoUrlForSession !== "") {
-  sessionSettings.store = new MongoStore({url: config.mongoUrlForSession});
+if (env !== 'development' && config.db.mongoUrlForSession && config.db.mongoUrlForSession !== "") {
+  sessionSettings.store = new MongoStore({url: config.db.mongoUrlForSession});
 }
-const _port = config.port//8080;
+const _port = config.app.port//8080;
 
 const app = express();
 app.use(express.static('public'));
