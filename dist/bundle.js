@@ -23702,38 +23702,43 @@ exports.default = recommender;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var company = function company() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   switch (action.type) {
     case 'COMPANY_REQUEST_START':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: true,
         error: null
-      }]));
+      });
     case 'COMPANY_REQUEST_FAIL':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: false,
         error: action.error,
         company: action.company
-      }]));
+      });
     case 'COMPANY_SET':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         retrievedCompany: action.company,
         isFetching: false,
         error: null
-      }]));
+      });
     case 'COMPANIES_SET':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         companies: action.companies,
         pagination: action.pagination,
         isFetching: false,
         error: null
-      }]));
+      });
     default:
       return state;
   }
@@ -23751,25 +23756,26 @@ exports.default = company;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var user = function user() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   switch (action.type) {
     case 'USER_REQUEST_START':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: true,
         error: null
-      }]));
+      });
     case 'USER_REQUEST_FAIL':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: false,
         error: action.error,
         retrievedUser: action.values
-      }]));
+      });
     case 'USER_SET':
       return Object.assign({}, state, {
         isFetching: false,
@@ -23777,12 +23783,14 @@ var user = function user() {
         error: action.user.error ? action.user.error : null
       });
     case 'USERLIST_SET':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: false,
         userList: action.users,
         pagination: action.pagination,
         error: null
-      }]));
+      });
     default:
       return state;
   }
@@ -23800,29 +23808,32 @@ exports.default = user;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 var access = function access() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   switch (action.type) {
     case 'ACCESS_REQUEST_START':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: true,
         userError: null
-      }]));
+      });
     case 'ACCESS_REQUEST_FAIL':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: false,
         userError: action.error
-      }]));
+      });
     case 'ACCESS_SET':
-      return Object.assign.apply(Object, [{}, state].concat(_toConsumableArray(state), [{
+      return Object.assign({}, state,
+      // ...state,
+      {
         isFetching: false,
         currentUser: action.user
-      }]));
+      });
     default:
       return state;
   }

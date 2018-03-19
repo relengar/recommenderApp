@@ -2,15 +2,13 @@ const user = (state = {}, action) => {
   switch (action.type) {
     case 'USER_REQUEST_START':
       return Object.assign({}, state,
-        ...state,
-        {
+                {
           isFetching: true,
           error: null
         });
     case 'USER_REQUEST_FAIL':
       return Object.assign({}, state,
-        ...state,
-        {
+                {
           isFetching: false,
           error: action.error,
           retrievedUser: action.values
@@ -24,8 +22,7 @@ const user = (state = {}, action) => {
         });
     case 'USERLIST_SET':
       return Object.assign({}, state,
-        ...state,
-        {
+                {
           isFetching: false,
           userList: action.users,
           pagination: action.pagination,

@@ -2,23 +2,20 @@ const company = (state = {}, action) => {
   switch (action.type) {
     case 'COMPANY_REQUEST_START':
       return Object.assign({}, state,
-        ...state,
-        {
+                {
           isFetching: true,
           error: null
         });
     case 'COMPANY_REQUEST_FAIL':
       return Object.assign({}, state,
-        ...state,
-        {
+                {
           isFetching: false,
           error: action.error,
           company: action.company
         });
     case 'COMPANY_SET':
         return Object.assign({}, state,
-          ...state,
-          {
+                    {
             retrievedCompany: action.company,
             isFetching: false,
             error: null
@@ -26,8 +23,7 @@ const company = (state = {}, action) => {
         );
     case 'COMPANIES_SET':
         return Object.assign({}, state,
-          ...state,
-          {
+                    {
             companies: action.companies,
             pagination: action.pagination,
             isFetching: false,
