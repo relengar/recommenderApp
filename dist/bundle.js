@@ -23708,32 +23708,24 @@ var company = function company() {
 
   switch (action.type) {
     case 'COMPANY_REQUEST_START':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: true,
         error: null
       });
     case 'COMPANY_REQUEST_FAIL':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
         company: action.company
       });
     case 'COMPANY_SET':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         retrievedCompany: action.company,
         isFetching: false,
         error: null
       });
     case 'COMPANIES_SET':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         companies: action.companies,
         pagination: action.pagination,
         isFetching: false,
@@ -23762,16 +23754,12 @@ var user = function user() {
 
   switch (action.type) {
     case 'USER_REQUEST_START':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: true,
         error: null
       });
     case 'USER_REQUEST_FAIL':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
         retrievedUser: action.values
@@ -23783,9 +23771,7 @@ var user = function user() {
         error: action.user.error ? action.user.error : null
       });
     case 'USERLIST_SET':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: false,
         userList: action.users,
         pagination: action.pagination,
@@ -23814,23 +23800,17 @@ var access = function access() {
 
   switch (action.type) {
     case 'ACCESS_REQUEST_START':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: true,
         userError: null
       });
     case 'ACCESS_REQUEST_FAIL':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: false,
         userError: action.error
       });
     case 'ACCESS_SET':
-      return Object.assign({}, state,
-      // ...state,
-      {
+      return Object.assign({}, state, {
         isFetching: false,
         currentUser: action.user
       });
