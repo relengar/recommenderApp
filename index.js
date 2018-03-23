@@ -42,5 +42,6 @@ app.use(passport.session());
 require("./passport/passport.js");
 const expressWs = require('express-ws')(app);
 require("./routes")(app, expressWs); // request routing
-console.log("starting server on port: " + _port);
+
+console.log(`starting server on port: ${_port}`);
 app.listen(_port);

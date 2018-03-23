@@ -1,10 +1,8 @@
-// var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload']);
 var recommender = angular.module('recommender', ['ngCookies', 'ui.router', 'ngFileUpload', 'uiGmapgoogle-maps']);
 
 recommender.config(function($stateProvider, uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyDSfomPj1I5i7jlGkKb41r39uZJnkIF59o',
-        // v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'geometry' //'weather,geometry,visualization'
     });
   let states = [
@@ -49,7 +47,11 @@ recommender.config(function($stateProvider, uiGmapGoogleMapApiProvider) {
     }
   ];
 
-  for (let i = 0; i < states.length; i++) {
-    $stateProvider.state(states[i]);
-  }
+
+  states.forEach(state => {
+    $stateProvider.state(state);
+  });
+  // for (let i = 0; i < states.length; i++) {
+  //   $stateProvider.state(states[i]);
+  // }
 });

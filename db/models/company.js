@@ -28,11 +28,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Company.associate = (models) => {
-    // Company.belongsToMany(models.Location, {
-    //   through: models.queryParameter,
-    //   foreignKey:'location',
-    //   as: 'location'
-    // });
     Company.belongsToMany(models.Category, {
       through: models.queryParameter,
       foreignKey:'category',
