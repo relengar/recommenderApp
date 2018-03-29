@@ -83,6 +83,7 @@ export const updateUser = data => {
   return dispatch => {
     dispatch(requestStart());
     if (isAllowedImageFormat(data.file)) {
+      console.log(data)
       requestFunc('/user/update', 'POST', data)
       .then(resp => {
         dispatch(setUser(data));

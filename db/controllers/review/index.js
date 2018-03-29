@@ -1,7 +1,7 @@
-const Review = require("../models").Review;
-const Comment = require("../models").Comment;
-const User = require("../models").User;
-const Company = require("../models").Company;
+const Review = require("../../models").Review;
+const Comment = require("../../models").Comment;
+const User = require("../../models").User;
+const Company = require("../../models").Company;
 
 let mean = (history) => {
   let mean = 0;
@@ -36,7 +36,7 @@ module.exports = {
             resp.company = company;
             res.status(200).send(resp);
             if (previousRating !== parseInt(company.rating)) {
-              req.wss.clients.forEach((client) => {
+              req.wss.clients.forEach(client => {
                 client.send(parseInt(company.rating));
               });
             }

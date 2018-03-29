@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FormInput from './formInput';
+import Gallery from './gallery';
 
 class CompanyForm extends React.Component {
   constructor(props) {
@@ -8,12 +9,23 @@ class CompanyForm extends React.Component {
     this.alterInput = this.alterInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    let initState = {name: "", email: "", address: "", homepage: "", description: "", error: null};
+    this.setFiles = this.setFiles.bind(this);
+    let initState = {name: "", email: "", address: "", homepage: "", description: "", error: null, gallery: []};
     this.state = Object.assign({}, initState, this.props.company);
   }
 
   alterInput(evt) {
     this.setState({[evt.target.id]: evt.target.value});
+  }
+  setFiles(evt) {
+    const { company } = this.props;
+    let gallery = company.gallery ? company.gallery : [];
+    let temp = {gallery};
+    Array.forEach(evt.target.files, (file, i) => {
+      temp[`gallery[${i}]`] = file;
+      temp.gallery.push(file.name);
+    });
+    this.setState(temp);
   }
   handleSubmit(evt) {
     evt.preventDefault();
@@ -28,7 +40,8 @@ class CompanyForm extends React.Component {
   }
 
   render() {
-    const { isNew, company, error } = this.props;
+    const { isNew, company, error, deletePic } = this.props;
+    let showPics = !isNew && company.gallery && company.gallery.length > 0;
     return(
       <form onSubmit={this.handleSubmit}>
         <h1>{isNew ? 'New company': company.name}</h1>
@@ -37,6 +50,11 @@ class CompanyForm extends React.Component {
         <FormInput type={'text'} id={'address'} value={this.state.address} label={'Address'} onChange={this.alterInput} />
         <FormInput type={'text'} id={'homepage'} value={this.state.homepage} label={'Homepage'} onChange={this.alterInput} />
         <FormInput type={'text'} id={'description'} value={this.state.description} label={'Description'} onChange={this.alterInput} />
+        <div className="form-group">
+          <label htmlFor={'files'}>Profile picture</label>
+          <input className="form-control-file" id={'files'} type="file" name={'files'} onChange={this.setFiles} multiple/>
+        </div>
+        {showPics && <Gallery pictures={company.gallery} companyId={company.id} editable={true}/>}
         {
           isNew ?
           <div className="modal-footer">
@@ -59,7 +77,7 @@ CompanyForm.propTypes = {
   submitCompany: PropTypes.func.isRequired,
   deleteCompany: PropTypes.func,
   isNew: PropTypes.bool,
-  error: PropTypes.string
+  error: PropTypes.string,
 };
 
 export default CompanyForm;

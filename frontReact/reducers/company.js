@@ -30,6 +30,29 @@ const company = (state = {}, action) => {
             error: null
           }
         );
+    case 'GALLERY_FREEZE':
+        return Object.assign({}, state,
+          {
+            galleryFrozen: true
+          }
+        );
+    case 'GALLERY_DELETE_PICS':
+      const newGallery = state.retrievedCompany.gallery.filter(pic => action.pics.indexOf(pic) === -1);
+      const updatedCompany = Object.assign({}, state.retrievedCompany, {gallery: newGallery});
+      return Object.assign({}, state,
+        {
+          galleryFrozen: false,
+          retrievedCompany: updatedCompany,
+          error: null
+        }
+      );
+    case 'GALLERY_FAIL':
+      return Object.assign({}, state,
+        {
+          galleryFrozen: false,
+          error: action.error
+        }
+      );
     default:
       return state;
   }

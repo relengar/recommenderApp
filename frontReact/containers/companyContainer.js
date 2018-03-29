@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import ViewDataFields from '../components/viewDataFields';
 import CompanyForm from '../components/companyForm';
+import Gallery from '../components/gallery';
 
 class CompanyContainer extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class CompanyContainer extends React.Component {
           header={company.name}
           docId={company.id}
           docType={'company'}
-          children={<div><NavLink to={'/app/user/'+company.owner.id}>{company.owner.name}</NavLink></div>}
+          children={<div><Gallery pictures={company.gallery} companyId={company.id} editable={false}/><NavLink to={'/app/user/'+company.owner.id}>{company.owner.name}</NavLink></div>}
         />
       );
     }
@@ -103,7 +104,7 @@ const mapStateToProps = (state, ownProps) => {
     isFetching: state.company.isFetching,
     currentUser: state.access.currentUser,
     error: state.company.error,
-    urlId: ownProps.match.params.id
+    urlId: ownProps.match.params.id,
   };
 };
 

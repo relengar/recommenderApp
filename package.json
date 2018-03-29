@@ -33,8 +33,8 @@
     "sequelize-cli": "^3.2.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon",
+    "start": "webpack && node index.js",
+    "start:dev": "webpack && nodemon --exec node --inspect index.js",
     "build": "babel src -d lib"
   },
   "devDependencies": {

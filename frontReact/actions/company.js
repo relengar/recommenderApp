@@ -1,4 +1,4 @@
-import { requestFunc } from './helpers';
+import { requestFunc, isAllowedImageFormat } from './helpers';
 
 const requestStart = () => {
   return {
@@ -22,7 +22,7 @@ const setCompanies = (companies, pagination) => {
   };
 };
 
-export const setCompany = (company) => {
+export const setCompany = company => {
   return {
     type: 'COMPANY_SET',
     company,
@@ -33,7 +33,14 @@ export const getCompany = id => {
   return dispatch => {
     dispatch(requestStart());
     requestFunc('/company/'+id)
-    .then(resp => {dispatch(setCompany(resp.data.company))})
+    .then(resp => {
+      let company = Object.assign({},
+        resp.data.company,
+        { gallery: resp.data.gallery }
+      );
+      console.log(company);
+      dispatch(setCompany(company))
+    })
     .catch(resp => {dispatch(requestFail(resp.response.data.message, {}));})
   };
 };
@@ -64,9 +71,18 @@ export const createCompany = data => {
 export const updateCompany = (data, id) => {
   return dispatch => {
     dispatch(requestStart());
-    requestFunc('/company/'+id, 'POST', data)
-    .then(resp => {dispatch(setCompany(data))})
-    .catch(resp => {dispatch(requestFail(resp.response.data.message, {}))});
+    let imgOk = true;
+    Array.forEach(data.gallery, (file, i) => {
+      imgOk = isAllowedImageFormat(data[`gallery[${i}]`]) ? imgOk : false;
+    });
+    if (imgOk) {
+      requestFunc('/company/'+id, 'POST', data)
+      .then(resp => {dispatch(setCompany(data))})
+      .catch(resp => {dispatch(requestFail(resp.response.data.message, {}))});
+    }
+    else {
+      dispatch(requestFail("Please upload images only", {}));
+    }
   };
 };
 
