@@ -1,17 +1,7 @@
 const Company = require("../../models").Company;
+const Category = require("../../models").Category;
 const Pictures = require("../pictures");
 const helpers = require('./helpers.js');
-
-// let getBorderLatLon = (lat, lon, radius) => {
-//   let result = {maxLat: NaN, minLat: NaN, maxLon: NaN, minLon: NaN};
-//   let latDistVal = (radius / latDistanceInM);
-//   let lonDistVal = (radius / lonDistanceInM);
-//   result.maxLat = lat + (latDistVal);
-//   result.minLat = lat - (latDistVal);
-//   result.maxLon = lon + (lonDistVal);
-//   result.minLon = lon - (lonDistVal);
-//   return result;
-// }
 
 module.exports = {
   create(req, res) {

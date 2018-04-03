@@ -35,15 +35,12 @@ angular.module("recommender")
         resp.gallery.forEach(pic => {
           $scope.gallery.push('/company/'+resp.company.id+'/picture/' + pic);
         });
-        // for (let i = 0; i < resp.gallery.length; i++) {
-        //   $scope.gallery.push('/company/'+resp.company.id+'/picture/' + resp.gallery[i])
-        // }
       }
       $scope.circle.center = { latitude: parseFloat($scope.company.coordsLat), longitude: parseFloat($scope.company.coordsLon) };
       $scope.map.center = { latitude: parseFloat($scope.company.coordsLat), longitude: parseFloat($scope.company.coordsLon) };
       $scope.circle.radius = parseInt($scope.company.coordsRad);
       $scope.map.refresh = true;
-      $scope.gallery = resp.gallery ? resp.gallery : [];
+      // $scope.gallery = resp.gallery ? resp.gallery : [];
       discussionService.getReviewsbyCompany(resp.company.id, $scope.pagination, (reviews, err) => {
         $scope.reviews = reviews.rows;
         $scope.pagination.count = reviews.count;

@@ -15,9 +15,10 @@ module.exports = {
         let gallery = [];
         fs.readdir('./db/images/company/'+ company.id, (err, files) => {
           if (files) {
-            for (let i = 0; i < files.length; i++) {
-              gallery.push('/company/'+company.id+'/picture/' + files[i]);
-            }
+            files.forEach(file => {
+              gallery.push(file);
+              // gallery.push('/company/'+company.id+'/picture/' + file);
+            });
           }
           let host = req.get('host');
           res.status(200).send({company: company, gallery: gallery, host:host});

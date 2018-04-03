@@ -10,11 +10,11 @@ angular.module("recommender")
       if (resp && resp.company) {
         $scope.currentCompany = resp.company;
         if (resp.gallery) {
-          for (let i = 0; i < resp.gallery.length; i++) {
-            $scope.gallery.push('/company/'+resp.company.id+'/picture/' + resp.gallery[i])
-          }
+          resp.gallery.forEach(pic => {
+            $scope.gallery.push('/company/'+resp.company.id+'/picture/' + pic)
+          });
         }
-        $scope.gallery = resp.gallery ? resp.gallery : [];
+        // $scope.gallery = resp.gallery ? resp.gallery : [];
       }
     });
 
