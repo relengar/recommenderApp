@@ -1,4 +1,5 @@
 const Company = require("../../models").Company;
+const Category = require("../../models").Category;
 const Pictures = require("../pictures");
 const helpers = require('./helpers.js');
 
@@ -26,25 +27,19 @@ module.exports = {
         ownerId: req.user.id
       }, {transaction: req.transcation})
       .then(company => {
-        Pictures.saveGallery(req, res, company)
-        .then(company => {
-          res.status(200).send({comp:company});
-        })
+        return Category
+        .findById(req.body.category)
+          .then(category => {
+            company.addCategory(category)
+            .then(resp => {console.log(resp)})
+            .catch(err => {console.log(err)});
+            Pictures.saveGallery(req, res, company)
+            .then(company => {
+              res.status(200).send({comp:company, cat:category});
+            });
+          })
+          .catch(err => res.status(500).send(err));
       })
-      // .then(company => {
-      //   return Category
-      //   .findById(req.body.category)
-      //     .then(category => {
-      //       company.addCategory(category)
-      //       .then(resp => {console.log(resp)})
-      //       .catch(err => {console.log(err)});
-      //       Pictures.saveGallery(req, res, company)
-      //       .then(company => {
-      //         res.status(200).send({comp:company, cat:category});
-      //       });
-      //     })
-      //     .catch(err => res.status(500).send(err));
-      // })
       .catch(error => res.status(500).send(error));
   },
   delete(req, res) {

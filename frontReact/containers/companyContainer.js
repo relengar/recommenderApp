@@ -37,7 +37,7 @@ class CompanyContainer extends React.Component {
   }
 
   render() {
-    const { company, currentUser, isFetching, error, urlId } = this.props;
+    const { company, currentUser, isFetching, error, urlId, categories } = this.props;
     let edit = urlId && currentUser && company.id && currentUser.id === company.owner.id;
     let view = urlId && company.id;
     if (isFetching) {
@@ -49,6 +49,7 @@ class CompanyContainer extends React.Component {
       return (
         <CompanyForm
           company={company}
+          categories={categories}
           isNew={false}
           submitCompany={this.updateCompany}
           deleteCompany={this.deleteCompany}
@@ -80,6 +81,7 @@ class CompanyContainer extends React.Component {
       return (
         <CompanyForm
           company={company}
+          categories={categories}
           isNew={true}
           submitCompany={this.registerCompany}
           error={error}
@@ -93,6 +95,7 @@ CompanyContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
   company: PropTypes.object,
+  categories: PropTypes.array,
   error: PropTypes.string,
   currentUser: PropTypes.object,
   urlId: PropTypes.string
@@ -101,6 +104,7 @@ CompanyContainer.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     company: state.company.retrievedCompany ? state.company.retrievedCompany : {},
+    categories: state.company.categories ? state.company.categories : [],
     isFetching: state.company.isFetching,
     currentUser: state.access.currentUser,
     error: state.company.error,

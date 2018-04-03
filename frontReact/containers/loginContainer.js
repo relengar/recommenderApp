@@ -37,9 +37,11 @@ class LoginContainer extends React.Component {
     }
     else if (loggedUser && loggedUser.id) {
       return (
-        <div>Welcome {loggedUser.name}
-          <p><button type="button" name="button" onClick={this.handleLogOut}>Log out</button></p>
-        </div>
+        <header className="navbar" id="header">
+          <div><h4>Welcome {loggedUser.name}</h4>
+            <p><button className="btn btn-primary" type="button" name="button" onClick={this.handleLogOut}>Log out</button></p>
+          </div>
+        </header>
       );
     }
     else {

@@ -30,6 +30,14 @@ const company = (state = {}, action) => {
             error: null
           }
         );
+    case 'CATEGORIES_SET':
+        return Object.assign({}, state,
+          {
+            categories: action.categories,
+            isFetching: false,
+            error: null
+          }
+        );
     case 'GALLERY_FREEZE':
         return Object.assign({}, state,
           {

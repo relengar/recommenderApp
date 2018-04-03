@@ -33,9 +33,8 @@ export const setUser = (user) => {
 export const getUserList = (offset = 0, limit = 2) => {
   return dispatch => {
     dispatch(requestStart());
-    let url = '/user/all?offset='+offset+'"&limit='+limit;
     let pagination = {offset, limit};
-    requestFunc(url)
+    requestFunc(`/user/all?offset=${offset}"&limit=${limit}`)
     .then(resp => {
       pagination.count = resp.data.count;
       dispatch(setUserList(resp.data.rows, pagination));
@@ -69,7 +68,7 @@ export const createUser = data => {
 export const getUser = id => {
   return dispatch => {
     dispatch(requestStart());
-    requestFunc('/user/'+id)
+    requestFunc(`/user/${id}`)
     .then(resp => {
       dispatch(setUser(resp.data));
     })

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FormInput from './formInput';
+import FormSelect from './formSelect';
 import Gallery from './gallery';
 
 class CompanyForm extends React.Component {
@@ -10,7 +11,7 @@ class CompanyForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.setFiles = this.setFiles.bind(this);
-    let initState = {name: "", email: "", address: "", homepage: "", description: "", error: null, gallery: []};
+    let initState = {name: "", email: "", address: "", homepage: "", description: "", error: null, gallery: [], category: null};
     this.state = Object.assign({}, initState, this.props.company);
   }
 
@@ -29,9 +30,6 @@ class CompanyForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault();
-    if (this.state.name) {
-
-    }
     this.props.submitCompany(this.state);
   }
   handleDelete(evt) {
@@ -40,7 +38,7 @@ class CompanyForm extends React.Component {
   }
 
   render() {
-    const { isNew, company, error, deletePic } = this.props;
+    const { isNew, company, categories, error, deletePic } = this.props;
     let showPics = !isNew && company.gallery && company.gallery.length > 0;
     return(
       <form onSubmit={this.handleSubmit}>
@@ -50,6 +48,7 @@ class CompanyForm extends React.Component {
         <FormInput type={'text'} id={'address'} value={this.state.address} label={'Address'} onChange={this.alterInput} />
         <FormInput type={'text'} id={'homepage'} value={this.state.homepage} label={'Homepage'} onChange={this.alterInput} />
         <FormInput type={'text'} id={'description'} value={this.state.description} label={'Description'} onChange={this.alterInput} />
+        {isNew && <FormSelect data={categories} label={'Category'} id={'category'} onChange={this.alterInput} valueAttr={'id'} nameAttr={'name'} />}
         <div className="form-group">
           <label htmlFor={'files'}>Profile picture</label>
           <input className="form-control-file" id={'files'} type="file" name={'files'} onChange={this.setFiles} multiple/>
@@ -74,6 +73,7 @@ class CompanyForm extends React.Component {
 
 CompanyForm.propTypes = {
   company: PropTypes.object,
+  categories: PropTypes.array,
   submitCompany: PropTypes.func.isRequired,
   deleteCompany: PropTypes.func,
   isNew: PropTypes.bool,
