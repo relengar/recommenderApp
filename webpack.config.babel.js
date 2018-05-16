@@ -1,10 +1,18 @@
 import webpack from 'webpack';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+ template: './dist/index.html',
+ filename: 'index.html',
+ inject: 'body'
+});
 
 export default {
   entry: './frontReact/index.js',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve('dist'),
+    publicPath: "/",
     filename: 'bundle.js'
   },
   module: {
@@ -18,6 +26,9 @@ export default {
           presets: ['react', 'es2015']
         }
       },
-    ],
-  }
+    ]
+  },
+  plugins: [
+    HtmlWebpackPluginConfig
+  ]
 };
