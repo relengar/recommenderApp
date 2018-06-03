@@ -6,7 +6,7 @@ import { createUser, getUser, setUser, deleteUser, updateUser } from '../actions
 import ViewDataFields from '../components/viewDataFields';
 import UserForm from '../components/userForm';
 
-class UserContainer extends React.Component {
+export class UserContainer extends React.Component {
   constructor(props) {
     super(props);
     this.registerNewUser = this.registerNewUser.bind(this);
@@ -53,7 +53,7 @@ class UserContainer extends React.Component {
       // view page
       let fields = ["name", "firstName", "lastName", "email"].map(field => {
         return {value: user[field], label: field};
-      });
+      }).filter(item => item.value);
       return (
         <ViewDataFields
           dataArr={fields}

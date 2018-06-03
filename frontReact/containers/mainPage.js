@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { getUserList } from '../actions/user';
 import { getAllCompanies, getCategories } from '../actions/company';
 import { NavLink } from 'react-router-dom';
-import PaginatedLinks from '../components/paginatedLinks';
+import Pagination from '../components/pagination';
 import FormSelect from '../components/formSelect';
 
-class MainPage extends React.Component {
+export class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.getUsers = this.getUsers.bind(this);
@@ -16,10 +16,10 @@ class MainPage extends React.Component {
     this.state = {category: null};
   }
   componentDidMount() {
-    const { pagination } = this.props;
-    this.props.dispatch(getUserList(pagination.users.offset));
+    const { dispatch, pagination } = this.props;
+    dispatch(getUserList(pagination.users.offset));
     // this.props.dispatch(getAllCompanies(pagination.companies.offset));
-    this.props.dispatch(getCategories());
+    dispatch(getCategories());
   }
 
   getUsers(evt) {
@@ -35,8 +35,10 @@ class MainPage extends React.Component {
     this.props.dispatch(getAllCompanies(this.state.category, offset));
   }
   setCategory(evt) {
-    this.setState({category: evt.target.value});
-    this.props.dispatch(getAllCompanies(evt.target.value, 0))
+    // this.setState({category: evt.target.value});
+    this.setState({category: evt.target.getAttribute('value')});
+    // this.props.dispatch(getAllCompanies(evt.target.value, 0));
+    this.props.dispatch(getAllCompanies(evt.target.getAttribute('value'), 0));
   }
 
   render() {
@@ -49,9 +51,8 @@ class MainPage extends React.Component {
         </div>
         <div className="container">
         <h3>Users</h3>
-        <PaginatedLinks
-          items={userList}
-          urlPrefix={'/app/user/'}
+        <Pagination
+          children={userList.map(item => {       return <div key={item.id}><NavLink to={'/app/user/'+item.id}>{item.name}</NavLink></div>     })}
           pagination={pagination.users}
           getItems={this.getUsers}
           isFetching={isFetching.users}
@@ -59,15 +60,15 @@ class MainPage extends React.Component {
         </div>
         <div className="container">
         <h3>Companies</h3>
-        <FormSelect
-          data={categories}
-          onChange={this.setCategory}
-          valueAttr={'id'}
-          nameAttr={'name'}
-        />
-        <PaginatedLinks
-          items={companies}
-          urlPrefix={'/app/company/'}
+        <ul className="nav">
+          {categories.map(cat => {
+            return <li key={cat.id} className="nav-item">
+                    <a className="nav-link active" value={cat.id} onClick={this.setCategory} href="javascript:">{cat.name}</a>
+                    </li>
+          })}
+        </ul>
+        <Pagination
+          children={companies.map(item => {       return <div key={item.id}><NavLink key={item.id} to={'/app/company/'+item.id}>{item.name}</NavLink></div>     })}
           pagination={pagination.companies}
           getItems={this.getCompanies}
           isFetching={isFetching.companies}
@@ -88,7 +89,7 @@ MainPage.propTypes = {
   pagination: PropTypes.object,
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   let pagination = {
     users: state.user.pagination ? state.user.pagination : {offset: 0},
     companies: state.company.pagination ? state.company.pagination : {offset: 0}

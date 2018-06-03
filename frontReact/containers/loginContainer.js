@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUser, logIn, logOut } from '../actions/access';
 
-class LoginContainer extends React.Component {
+export class LoginContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {username: '', password: ''};
@@ -33,7 +33,7 @@ class LoginContainer extends React.Component {
   render() {
     const { loggedUser, isFetching , userError} = this.props
     if (isFetching) {
-      return <div><p>Loading...</p></div>
+      return <header className="navbar" id="header"><div><p>Loading...</p></div></header>
     }
     else if (loggedUser && loggedUser.id) {
       return (
