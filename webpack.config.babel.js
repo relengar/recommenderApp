@@ -3,9 +3,11 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
- template: './dist/index.html',
+ template: './index.html',
  filename: 'index.html',
- inject: 'body'
+ inject: 'body',
+ title: 'Recommender',
+
 });
 
 export default {
@@ -30,5 +32,6 @@ export default {
   },
   plugins: [
     HtmlWebpackPluginConfig
+    // new HtmlWebpackPlugin()
   ]
 };
