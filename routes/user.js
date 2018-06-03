@@ -17,11 +17,11 @@ const handlePassportResp = (err, user, info, req, res, next) => {
     // User.saveProfilePic(req, resp)
     req.id = user.id;
     Pictures.savePicture(req, resp)
-    .then((resp) => {
+    .then(resp => {
       req.login();
       res.status(200).send(resp);
     })
-    .catch((err) => {
+    .catch(err => {
       req.login(user, (user) => { // sets session
         res.status(200).send(resp);
       });
