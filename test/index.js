@@ -35,14 +35,12 @@ describe('User tests', function () {
     it('Create new user', function(done) {
         chai.request(baseUrl)
         .put('/user')
-        .send({
-            name: "testUser",
-            password: "testPassword1",
-            firstName: "firstName",
-            lastName: "lastName",
-            email: "user.test@domain.com"
-
-        })
+        .attach('profilePic', fs.readFileSync('./test/test.jpg'), 'test.jpg')
+        .field("name", "testUser")
+        .field("password", "testPassword1")
+        .field("firstName", "firstName")
+        .field("lastName", "lastName")
+        .field("email", "user.test@domain.com")
         .end((err, resp) => {
             expect(err).to.be.null
             expect(resp).to.have.status(200)
@@ -115,15 +113,14 @@ describe('User tests', function () {
         it('Create company' , function(done){
             chai.request(baseUrl)
             .post('/company')
-            .set('cookie', loginJWT)
-            .send({
-                name: "testCompany1",
-                category: 1,
-                email: "testCompany1@domain.com",
-                address: "testCompany1Address",
-                homepage: "https://www.testCompany1.com",
-                description: "meh"
-            })
+            .set('Cookie', loginJWT)
+            .attach('gallery[0]', fs.readFileSync('./test/test.jpg'), 'test.jpg')
+            .field("name", "testCompany1")
+            .field("category", 1)
+            .field("email", "testCompany1@domain.com")
+            .field("address", "testCompany1Address")
+            .field("homepage", "https://www.testCompany1.com")
+            .field("description", "meh")
             .end((err, resp) => {
                 expect(err).to.be.null
                 expect(resp).to.have.status(200)
@@ -155,6 +152,15 @@ describe('User tests', function () {
                 expect(resp).to.have.status(200)
                 expect(resp.body.company.name).to.equal("testCompany1")
                 expect(resp.body.company.description).to.equal("UPDATED")
+                done();
+            })
+        })
+        it('Get Company picture', function(done) {
+            chai.request(baseUrl)
+            .get(`/company/${companyId}/picture/test.jpg`)
+            .end((err, resp) => {
+                expect(err).to.be.null
+                expect(resp).to.have.status(200);
                 done();
             })
         })
