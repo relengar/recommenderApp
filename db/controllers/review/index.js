@@ -60,11 +60,13 @@ module.exports = {
           model: Comment,
           as: "comments",
           limit: 3,
-          include: [{
-            model: User,
-            attributes: ['name', 'id'],
-            as: "commentingUser"
-          }]
+          include: [
+            {
+              model: User,
+              attributes: ['name', 'id'],
+              as: "commentingUser"
+            }
+          ]
         },
         {
           model:User,

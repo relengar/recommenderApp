@@ -34,7 +34,7 @@ module.exports = {
             .then(resp => {console.log(resp)})
             .catch(err => {console.log(err)});
             Pictures.saveGallery(req, res, company)
-            .then(company => {
+            .then(galleryResp => {
               res.status(200).send({comp:company, cat:category});
             });
           })

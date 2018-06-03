@@ -26,7 +26,7 @@ module.exports = {
       })
       .then(user => {
         if (req.files) {
-          req.id = req.body.id;
+          req.id = req.user.id;
           Pictures.deleteGallery(req, res)
           .then(msg => {
             Pictures.savePicture(req, res)
