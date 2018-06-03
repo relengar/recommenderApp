@@ -22,7 +22,7 @@ class CompanyForm extends React.Component {
     const { company } = this.props;
     let gallery = company.gallery ? company.gallery : [];
     let temp = {gallery};
-    Array.forEach(evt.target.files, (file, i) => {
+    Array.prototype.forEach.call(evt.target.files, (file, i) => {
       temp[`gallery[${i}]`] = file;
       temp.gallery.push(file.name);
     });

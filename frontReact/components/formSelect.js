@@ -8,7 +8,7 @@ const FormSelect = ({id, data, onChange, value, label, valueAttr, nameAttr}) => 
       <select id={id} name={id} onChange={onChange} value={value}>
         <option value={null}></option>
         {data.map((item, i) => {
-          return <option key={item.id ? item.id : i} value={valueAttr !== '' ? item[valueAttr] : item}>{nameAttr !== '' ? item[nameAttr] : item}</option>
+          return <option key={item.id ? item.id : i} value={valueAttr && valueAttr !== '' ? item[valueAttr] : item}>{nameAttr && nameAttr !== '' ? item[nameAttr] : item}</option>
         })}
       </select>
     </div>

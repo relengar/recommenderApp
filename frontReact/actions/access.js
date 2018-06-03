@@ -23,7 +23,7 @@ export const setCurrentUser = user => {
 export const logIn = (username, password) => {
   return dispatch => {
     dispatch(requestStart())
-    requestFunc('/login', 'POST', { name: username, password})
+    return requestFunc('/login', 'POST', { name: username, password})
     .then(resp => {dispatch(setCurrentUser(resp.data))})
     .catch(resp => {dispatch(requestFail(resp.response.data.message))});
   };
@@ -32,7 +32,7 @@ export const logIn = (username, password) => {
 export const logOut = () => {
   return dispatch => {
     dispatch(requestStart());
-    requestFunc('/logout')
+    return requestFunc('/logout')
     .then(resp => {dispatch(setCurrentUser(null))})
     .catch(resp => {dispatch(requestFail(resp.response.data.message))});
   };

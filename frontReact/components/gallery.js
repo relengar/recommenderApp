@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { deletePicture } from '../actions/gallery';
 import { connect } from 'react-redux';
 
-class Gallery extends React.Component {
+export class Gallery extends React.Component {
   constructor(props) {
     super(props);
     this.deletePic = this.deletePic.bind(this);
@@ -21,7 +21,7 @@ class Gallery extends React.Component {
         {pictures.map((pic, i) => {
           const url  = `/company/${companyId}/picture/${pic}`;
           return (
-            <span key={i}>
+            <span key={companyId + i}>
               <img className='profilePic' src={url} />
               {editable && <a className='bg-light btn' onClick={() => {this.deletePic(pic)}}>Delete</a>}
             </span>
