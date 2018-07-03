@@ -18,7 +18,7 @@ module.exports = {
         content: req.body.content,
         rating: req.body.rating,
         companyId: req.params.company_id,
-        userId: req.body.user_id
+        userId: req.body.userId
       })
       .then(review => {
         let resp = {

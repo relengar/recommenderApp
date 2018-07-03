@@ -24,7 +24,8 @@ describe('Company actions', () => {
         const dispActions = [
             {type: 'COMPANY_REQUEST_START'},
             {type: 'COMPANY_SET', company: Object.assign(companyObj, {gallery: undefined})},
-            {type: 'REVIEWS_REQUEST_START'},
+            {type: 'SET_CURRENT_REVIEW', review: null},
+            {type: 'DISCUSSION_REQUEST_START'},
             {type: 'REVIEWS_SET', reviews: [], pagination : pagination}
         ];
         mockServer.onGet(`/company/${companyObj.id}`).reply(200, {company: companyObj});
@@ -37,7 +38,7 @@ describe('Company actions', () => {
     it('Get all companies', () => {
         const dispActions = [
             {type: 'COMPANY_REQUEST_START'},
-            {type: 'COMPANIES_SET', companies: [], pagination},
+            {type: 'COMPANIES_SET', companies: [], pagination, categoryId: 1},
         ];
         mockServer.onGet(`/category/${1}?offset=${pagination.offset}&limit=${pagination.limit}`).reply(200, {rows: [], count: pagination.count})
 

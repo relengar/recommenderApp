@@ -1,24 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import Pagination from './pagination';
 
-// const ReviewItem = ({ review, canBeCommented, displayComments, submitComment }) => {
 class ReviewItem extends React.Component {
     constructor(props) {
         super(props);
+        this.toggle = this.toggle.bind(this);
         this.state = {content: "", reviewId: props.review.id};
     }
 
-    alterInput(evt) {
-        this.setState({[evt.target.id]: evt.target.value});
-      }
-    handleReviewSubmit(evt) {
+    toggle(evt) {
         evt.preventDefault();
-        submitComment(this.state);
+        const review = this.props.review.commentsView ? null : this.props.review;
+        this.props.toggleView(review);
+    }
+    renderComment(comment) {
+        const url = comment.commentType === 'user' ? `/app/user/${comment.commentingUser.id}` : '';
+        const name = comment.commentType === 'user' ? comment.commentingUser.name : 'Company';
+        return (
+            <div key={comment.id} className="card w-50">
+                <div className="card-header">
+                    <i><NavLink to={url}>{name}</NavLink></i>
+                </div>
+                <div className="card-body">
+                    {comment.content}
+                </div>
+            </div>
+        );
     }
 
     render() {
-        const { review, canBeCommented, displayComments } = this.props;
+        const { review, displayComments, pagination, getItems, toggleView, isFetching } = this.props;
         return (
             <section>
                 <div className="card w-75">
@@ -28,31 +41,17 @@ class ReviewItem extends React.Component {
                     <div className="card-body">
                         <p><strong>Rating: </strong> {review.rating}</p>
                         <p>{review.content}</p>
+                        {toggleView && <p><button className="btn btn-secondary" onClick={this.toggle}>View {review.commentsView ? 'reviews' : 'comments'}</button></p>}
                     </div>
-                    {
-                        canBeCommented && 
-                        <div className="card-footer">
-                            <h4>Your comment</h4>
-                            <p><textarea onChange={this.alterInput} value={this.state.content} name="content" id="content" cols="30" rows="10"></textarea></p>
-                            <p><button onClick={this.handleReviewSubmit}>Submit</button></p>
-                        </div>
-                    }
                 </div>
-                {displayComments && review.comments.map(comment => {
-                    const url = comment.commentType === 'user' ? `/app/user/${comment.commentingUser.id}` : ``;
-                    const name = comment.commentType === 'user' ? comment.commentingUser.name : 'Company';
-                    // comments objects have to be altered on backend, there always should be a user
-                    return (
-                        <div key={comment.id} className="card w-50">
-                            <div className="card-header">
-                                <i><NavLink to={url}>{name}</NavLink></i>
-                            </div>
-                            <div className="card-body">
-                                {comment.content}
-                            </div>
-                        </div>
-                    );
-                })}
+                {displayComments && review.comments &&
+                <Pagination
+                    children={review.comments.map(this.renderComment)}
+                    isFetching={isFetching}
+                    getItems={getItems}
+                    pagination={pagination}
+                />
+                }
                 <br />
             </section>
         );
@@ -61,9 +60,11 @@ class ReviewItem extends React.Component {
 
 ReviewItem.propTypes = {
     review: PropTypes.object.isRequired,
-    canBeCommented: PropTypes.bool.isRequired,
     displayComments: PropTypes.bool.isRequired,
-    submitComment: PropTypes.func
+    toggleView: PropTypes.func,
+    getItems: PropTypes.func,
+    pagination: PropTypes.object,
+    isFetching: PropTypes.bool
 }
 
 export default ReviewItem;

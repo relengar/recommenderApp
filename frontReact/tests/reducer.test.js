@@ -194,22 +194,22 @@ describe('Discussion reducers', () => {
     const pagination = {offset: 0, limit: 2, count: 0}
     it('Start discussion request', () => {
         const action = {
-            type: 'REVIEWS_REQUEST_START'
+            type: 'DISCUSSION_REQUEST_START'
         }
 
         expect(discussion({}, action)).toEqual({
-            fetchingReviews: true
+            isFetching: true
         })
     })
     it('Fail discussion request', () => {
         const action = {
-            type: 'REVIEWS_FAIL',
+            type: 'DISCUSSION_REQUEST_FAIL',
             error: 'Fail'
         }
 
         expect(discussion({}, action)).toEqual({
-            fetchingReviews: false,
-            reviewsError: action.error
+            isFetching: false,
+            error: action.error
         })
     })
     it('Set reviews', () => {
@@ -220,7 +220,7 @@ describe('Discussion reducers', () => {
         }
 
         expect(discussion({}, action)).toEqual({
-            fetchingReviews: false,
+            isFetching: false,
             reviews: action.reviews,
             revPagination: action.pagination
         })

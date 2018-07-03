@@ -5,7 +5,7 @@ import ReviewItem from '../../components/reviewItem';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-function setup(displayComments=true, canBeCommented=true) {
+function setup(displayComments=true) {
     const props = {
         review: {
             id: 1,
@@ -26,11 +26,13 @@ function setup(displayComments=true, canBeCommented=true) {
                 }
             ]
         },
-        canBeCommented,
+        pagination: {offset: 0, limit: 2, count: 10},
         displayComments,
-        submitComment: jest.fn()
+        getItems: jest.fn(),
+        toggleView: jest.fn(),
+        isFetching: false
     }
-        submitComment: jest.fn()
+
     const enzymeWrapper = shallow(<ReviewItem {...props}/>)
     return {
         props,
@@ -44,16 +46,19 @@ describe('ReviewItem component', () => {
 
     expect(enzymeWrapper.find('NavLink').first().props().to).toBe(`/app/user/${props.review.reviewer.id}`)
     expect(enzymeWrapper.find('button')).toHaveLength(1)
-    expect(enzymeWrapper.find('div.w-50')).toHaveLength(1)
+    expect(enzymeWrapper.find('Pagination')).toHaveLength(1)
+    enzymeWrapper.find('button').simulate('click', {preventDefault: () => {}})
+    expect(props.toggleView.mock.calls).toHaveLength(1);
   })
-  it('Render component with displayed comments and edit disabled', () => {
-    const { enzymeWrapper, props } = setup(true, false)
+  it('Render component without comments', () => {
+    const { enzymeWrapper } = setup(false)
 
-    expect(enzymeWrapper.find('button')).toHaveLength(0)
+    expect(enzymeWrapper.find('Pagination')).toHaveLength(0)
   })
-  it('Render component with comments view disabled', () => {
-    const { enzymeWrapper, props } = setup(false)
+  it('Render component with comments', () => {
+    const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('div.w-50')).toHaveLength(0)
+    expect(enzymeWrapper.find('div.card')).toHaveLength(2);
+    expect(enzymeWrapper.find('Pagination').props().children).toHaveLength(1);
   })
 })

@@ -13,7 +13,6 @@ export class MainPage extends React.Component {
     this.getUsers = this.getUsers.bind(this);
     this.getCompanies = this.getCompanies.bind(this);
     this.setCategory = this.setCategory.bind(this);
-    this.state = {category: null};
   }
   componentDidMount() {
     const { dispatch, pagination } = this.props;
@@ -29,15 +28,12 @@ export class MainPage extends React.Component {
     this.props.dispatch(getUserList(offset));
   }
   getCompanies(evt) {
-    const { pagination } = this.props;
+    const { pagination, categoryId } = this.props;
     let offset = pagination.companies.offset;
     offset = evt.target.id === 'next' ? offset + pagination.companies.limit : offset - pagination.companies.limit;
-    this.props.dispatch(getAllCompanies(this.state.category, offset));
+    this.props.dispatch(getAllCompanies(categoryId, offset));
   }
   setCategory(evt) {
-    // this.setState({category: evt.target.value});
-    this.setState({category: evt.target.getAttribute('value')});
-    // this.props.dispatch(getAllCompanies(evt.target.value, 0));
     this.props.dispatch(getAllCompanies(evt.target.getAttribute('value'), 0));
   }
 
@@ -83,6 +79,7 @@ MainPage.propTypes = {
   isFetching: PropTypes.object,
   userList: PropTypes.array,
   companies: PropTypes.array,
+  categoryId: PropTypes.number,
   categories: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool,
@@ -101,6 +98,7 @@ export const mapStateToProps = state => {
   return {
     userList: state.user.userList ? state.user.userList : [],
     companies: state.company.companies ? state.company.companies : [],
+    categoryId: parseInt(state.company.categoryId),
     categories: state.company.categories ? state.company.categories : [],
     isLoggedIn: (state.access.currentUser && !isNaN(state.access.currentUser.id)),
     isFetching,

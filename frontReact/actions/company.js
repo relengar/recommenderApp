@@ -1,5 +1,5 @@
 import { requestFunc, isAllowedImageFormat } from './helpers';
-import { getReviews } from './discussion';
+import { getReviews, setCurrentReview } from './discussion';
 
 const requestStart = () => {
   return {
@@ -15,11 +15,12 @@ const requestFail = (error, company) => {
   };
 };
 
-const setCompanies = (companies, pagination) => {
+const setCompanies = (companies, pagination, categoryId) => {
   return {
     type: 'COMPANIES_SET',
     companies,
-    pagination
+    pagination,
+    categoryId
   };
 };
 
@@ -47,6 +48,7 @@ export const getCompany = id => {
         { gallery: resp.data.gallery }
       );
       dispatch(setCompany(company))
+      dispatch(setCurrentReview(null));
       return dispatch(getReviews(company.id));
     })
     .catch(resp => {dispatch(requestFail(resp.response.data.message, {}));})
@@ -61,7 +63,7 @@ export const getAllCompanies = (categoryId, offset = 0, limit = 2) => {
       return requestFunc(`/category/${categoryId}?offset=${offset}&limit=${limit}`)
       .then(resp => {
         pagination.count = resp.data.count;
-        dispatch(setCompanies(resp.data.rows, pagination))
+        dispatch(setCompanies(resp.data.rows, pagination, categoryId))
       })
       .catch(resp => {dispatch(requestFail(resp.response.data.message, {}))});
     }

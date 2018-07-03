@@ -38,7 +38,7 @@ describe('CompanyContainer container' , () => {
         const stateAlterations = {
             company: {id: 2, name: 'testCompany', owner: {id: 1, name: 'owner'}, gallery: []}
         }
-        const { enzymeWrapper } = setup(stateAlterations);
+        const { enzymeWrapper } = setup(stateAlterations, true);
 
         expect(enzymeWrapper.find('ViewDataFields')).toHaveLength(1);
         expect(enzymeWrapper.find('ViewDataFields').props().docId).toEqual(stateAlterations.company.id);
@@ -48,7 +48,7 @@ describe('CompanyContainer container' , () => {
             company: {id: 2, name: 'testCompany', owner: {id: 1, name: 'owner'}, gallery: []},
             currentUser: {id: 1, name: 'compOwner'}
         }
-        const { enzymeWrapper, props } = setup(stateAlterations);
+        const { enzymeWrapper, props } = setup(stateAlterations, true);
 
         expect(enzymeWrapper.find('CompanyForm')).toHaveLength(1);
         expect(enzymeWrapper.find('CompanyForm').props().isNew).toBe(false);

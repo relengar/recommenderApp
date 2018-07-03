@@ -9,6 +9,7 @@ module.exports = (app, ratingWss) => {
   });
   app.get("/review/company/:company_id", Review.getReviewsbyCompany);
   app.get("/review/:review_id", Review.getReviewWithComments);
+  app.get("/review/comments/:review_id", Comment.getComments);
 
   //Comment
   app.post("/comment/:reviewId", Comment.create);

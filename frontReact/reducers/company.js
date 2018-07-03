@@ -26,6 +26,7 @@ const company = (state = {}, action) => {
                     {
             companies: action.companies,
             pagination: action.pagination,
+            categoryId: action.categoryId,
             isFetching: false,
             error: null
           }

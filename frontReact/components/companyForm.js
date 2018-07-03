@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FormInput from './formInput';
 import FormSelect from './formSelect';
 import Gallery from './gallery';
+import Discussion from '../containers/discussion';
 
 class CompanyForm extends React.Component {
   constructor(props) {
@@ -54,8 +55,7 @@ class CompanyForm extends React.Component {
           <input className="form-control-file" id={'files'} type="file" name={'files'} onChange={this.setFiles} multiple/>
         </div>
         {showPics && <Gallery pictures={company.gallery} companyId={company.id} editable={true}/>}
-        {
-          isNew ?
+        {isNew ?
           <div className="modal-footer">
             <button className="btn btn-primary" type="submit" name="button">Create</button>
           </div>
@@ -63,8 +63,7 @@ class CompanyForm extends React.Component {
           <div className="modal-footer">
             <button className="btn btn-primary" type="submit">Update</button>
             <button className="btn btn-secondary" type="button" onClick={this.handleDelete}>Delete</button>
-          </div>
-        }
+          </div>}
         {(error || this.state.error) && <span className="alert alert-dismissible alert-danger">{this.state.error ? this.state.error : error}</span>}
       </form>
     );
